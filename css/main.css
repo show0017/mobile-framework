@@ -75,13 +75,8 @@ h2, h3, p{
 /*
 Nav Bar
 ==============================================================*/
-.menu_container,
 .anchor-link {
     display: none;
-}
-
-.menu_container {
-    float: left;
 }
 
 .anchor-link {
@@ -153,7 +148,7 @@ body.active .main_content:before {
 }
 
 @media all and (max-width:48.000em){
-  .menu_container, .anchor-link {
+  .anchor-link {
       display: inline-block;
   }
 
