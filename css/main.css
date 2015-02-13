@@ -1,0 +1,228 @@
+*{
+	padding:0;
+	margin:0;
+    box-sizing: border-box;
+}
+
+/* Clearfix
+============================================================ */
+clearfix:after {
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    line-height: 0;
+    height: 0;
+}
+
+.clearfix {
+    display: inline-block;
+}
+
+html[xmlns] .clearfix {
+    display: block;
+}
+
+* html .clearfix {
+    height: 1%;
+}
+/*
+==============================================================*/
+
+
+/* Grid
+===============================================================*/
+.col-container{
+    width: 100%;
+}
+/*There are three columns in the header section, they contain back button, app title and
+Menu Navigation button. */
+
+.col-header{
+    /* 10 + 10 + 70 = 90%, margin left is 10% that will be divided over two spacing. %*/
+    float: left;
+    width: 10%;
+    margin-left: 5%;
+    outline: 1px solid red;
+}
+.col-header:first-child{
+    margin-left: 0%;
+}
+.col-header:nth-child(2){
+    width: 70%; /* Give larger space for app title to breath. */
+}
+/*
+===============================================================*/
+
+html{
+	width:100%;
+	height:100%;
+    background-color:#333;
+    font-family: Calibri, Arial, Helvetica, sans-serif;
+}
+
+h2, h3, p{
+	padding:0.2rem 2rem;
+}
+
+.container {
+    max-width: 100%;
+    margin: 0px auto;
+    overflow: hidden;
+    width: 100%;
+}
+
+/*
+Nav Bar
+==============================================================*/
+.menu_container,
+.anchor-link {
+    display: none;
+}
+
+.menu_container {
+    float: left;
+}
+
+.anchor-link {
+    padding: 1em;
+    background-color: #48c9b0;
+    color: #fff;
+}
+.anchor-link:hover {
+    background-color: #ccc;
+    color: #fff;
+}
+
+.nav {
+    width:100%;
+    border-bottom: 1px solid #000;
+}
+
+.nav ul {
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.nav ul li {
+    display: inline-block;
+    text-align: left;
+}
+.nav ul li a {
+    display: block;
+    padding: 10px 12px;
+    text-decoration: none;
+    color: #444;
+}
+.nav ul li a:hover {
+    background-color: #ccc;
+}
+
+/* According to the height of main_content class, the side menu backgound color will be filled.
+If you remove this line, Not all menu items will be styled with background color in case
+main contents are shorter than side menu height. */
+.main_content{
+    min-height: 400px;
+}
+.main_content,
+.nav {
+    transition: .2s margin ease;
+    display: block;
+    position: relative;
+}
+.main_content {
+    padding: 1.5em;
+    position: relative;
+    max-width: 70em;
+    width: 100%;
+    background-color: #f4f4f4;
+    margin: 0 auto;
+}
+body.active .main_content:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background-color: #4e4e4e;
+}
+
+@media all and (max-width:48.000em){
+  .menu_container, .anchor-link {
+      display: inline-block;
+  }
+
+  .nav {
+      float: left;
+      margin-left: -100%;
+      width: 300px;
+      z-index: 2;
+  }
+  .main_content {
+      float: left;
+      margin-left: 0;
+      width: 100%;
+  }
+
+  body.active .nav {
+      margin-left: 0;
+  }
+  body.active .main_content {
+      margin-right: -100%;
+  }
+
+  .nav {
+      padding: 0.6em 0;
+      border: none;
+      padding: 0;
+  }
+  .nav ul {
+      text-align: left;
+      font-weight: normal;
+  }
+  .nav ul li {
+      display: block;
+  }
+  .nav ul li a {
+      border-bottom: 1px solid #3E3E3E;
+      border-top: 1px solid #717171;
+      color: #000;
+      padding: 12px;
+  }
+  .nav ul li a:hover {
+      background-color:#5C5C5C;
+  }
+}
+
+
+/*
+============================================================*/
+
+/* Header Styling
+============================================================*/
+[data-role="header"] h1{
+  text-shadow: 1px 1px 1px #0cf;
+  color:#d4d4d4;
+  text-align:center;
+  letter-spacing:0.3rem;
+  word-spacing: 1rem;
+  font-variant:small-caps;
+}
+
+[data-rel="back"]{
+    float:left;
+    color:#fff;
+    padding:0.3rem 1rem;
+    color: #0C3;
+    font-size: 1rem;
+    line-height:2.0rem;
+    text-decoration:none;
+/*  display:none;*/
+}
+/*
+============================================================*/
