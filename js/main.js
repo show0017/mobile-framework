@@ -6,7 +6,8 @@ var svgIcon = (function(){
         /* Load hamburger svg icon that represents menu icon to html. */
 	var svgElement = document.getElementById(svgId);
     snapCanvas = Snap( svgElement );
-    snapCanvas.attr( 'viewBox', '0 0 64 64' );
+    //viewBox must match the same value in the original svg file. This represents the artboard.
+    snapCanvas.attr( 'viewBox', '-117 119 64 64' );
     Snap.load( svgUrl, function (fragment) {
 			var g = fragment.select( 'g' );
 			snapCanvas.append( g );
@@ -50,5 +51,5 @@ document.addEventListener("DOMContentLoaded", function(){
     hamburgerMenu.addEventListener("click", function(e){
         e.preventDefault();
         document.body.classList.toggle("active");
-    })
+    });
 });
