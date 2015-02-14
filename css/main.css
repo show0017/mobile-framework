@@ -116,7 +116,7 @@ main contents are shorter than side menu height. */
 }
 .main_content,
 .nav {
-    transition: .2s margin ease;
+    transition: 0.5s all ease;
     display: block;
     position: relative;
 }
@@ -153,6 +153,7 @@ body.active .main_content:before {
   .main_content {
       float: left;
       margin-left: 0;
+      margin-right: 0;/* smooth the animation when user closes hamburger menu*/
       width: 100%;
   }
 
