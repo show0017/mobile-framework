@@ -77,7 +77,7 @@ h2, h3, p{
 /*
 Nav Bar
 ==============================================================*/
-.anchor-link {
+#svg-hamburger {
     display: none;
 }
 
@@ -140,7 +140,7 @@ body.active .main_content:before {
 }
 
 @media all and (max-width:48.000em){
-  .anchor-link {
+  #svg-hamburger{
       display: inline-block;
   }
 
