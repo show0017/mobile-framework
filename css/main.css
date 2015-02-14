@@ -102,7 +102,7 @@ Nav Bar
     display: block;
     padding: 10px 12px;
     text-decoration: none;
-    color: #444;
+    color: #FFF;
 }
 .nav ul li a:hover {
     background-color: #ccc;
@@ -116,7 +116,7 @@ main contents are shorter than side menu height. */
 }
 .main_content,
 .nav {
-    transition: 0.5s all ease;
+    transition: 0.5s margin ease;
     display: block;
     position: relative;
 }
@@ -139,7 +139,7 @@ body.active .main_content:before {
     background-color: #4e4e4e;
 }
 
-@media all and (max-width:48.000em){
+@media all and (max-width:720px){
   #svg-hamburger{
       display: inline-block;
   }
