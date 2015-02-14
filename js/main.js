@@ -7,7 +7,7 @@ var svgIcon = (function(){
 	var svgElement = document.getElementById(svgId);
     snapCanvas = Snap( svgElement );
     //viewBox must match the same value in the original svg file. This represents the artboard.
-    snapCanvas.attr( 'viewBox', '-117 119 64 64' );
+    snapCanvas.attr( 'viewBox', '0 0 64 64' );
     Snap.load( svgUrl, function (fragment) {
 			var g = fragment.select( 'g' );
 			snapCanvas.append( g );
