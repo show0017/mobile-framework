@@ -43,7 +43,7 @@ Menu Navigation button. */
     float: left;
     width: 10%;
     margin-left: 5%;
-    outline: 1px solid red;
+/*    outline: 1px solid red;*/
 }
 .col-header:first-child{
     margin-left: 0%;
@@ -59,17 +59,19 @@ html{
 	height:100%;
     background-color:#333;
     font-family: Calibri, Arial, Helvetica, sans-serif;
+    padding: 0 2%;
 }
 
 h2, h3, p{
 	padding:0.2rem 2rem;
 }
 
-.container {
-    max-width: 100%;
-    margin: 0px auto;
+.wrapper {
+    max-width: 960px;
+    margin: 0 auto;
     overflow: hidden;
-    width: 100%;
+/*    width: 100%;*/
+/*    outline: 1px solid red;*/
 }
 
 /*
@@ -77,16 +79,6 @@ Nav Bar
 ==============================================================*/
 .anchor-link {
     display: none;
-}
-
-.anchor-link {
-    padding: 1em;
-    background-color: #48c9b0;
-    color: #fff;
-}
-.anchor-link:hover {
-    background-color: #ccc;
-    color: #fff;
 }
 
 .nav {

@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Web for mobile framework assignment</title>
     <link rel="stylesheet" href="css/main.css">
+    <script src="js/snap.svg.js"></script>
     <script src="js/main.js"></script>
 </head>
 
 <body>
 
 <!-- Containter DIV for the whole page.-->
-<div class="container">
+<div class="wrapper">
 
     <header data-role="header" class="col-container clearfix">
         <div class="col-header">
@@ -22,7 +23,9 @@
         </div>
 
         <div class="col-header">
-            <a id="menu-toggle" class="anchor-link">MENU</a>
+            <div id="menu-toggle" class="anchor-link">
+                <svg id="svg-hamburger"></svg>
+            </div>
         </div>
     </header>
 
