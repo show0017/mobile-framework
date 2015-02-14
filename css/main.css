@@ -193,6 +193,10 @@ body.active .main_content:before {
 
 /* Header Styling
 ============================================================*/
+header{
+    background: #2db34a;
+}
+
 [data-role="header"] h1{
   text-shadow: 1px 1px 1px #0cf;
   color:#d4d4d4;
@@ -224,3 +228,29 @@ body.active .main_content:before {
 	display:block;
 }
 
+/* Sticky Footer styling
+===============================================================*/
+html {
+    position: relative;
+    min-height: 100%;
+}
+body {
+    margin: 0 0 60px; /* bottom = footer height */
+}
+
+footer {
+    background: #2db34a;
+    position: absolute;
+    left: 2%; /* Typical to custom padding added to html tag*/
+    right: 2%; /* Typical to custom padding added to html tag*/
+    bottom: 0;
+    height: 60px;
+    width: 96%; /* width = 100% - 2*2% = 96%*/
+}
+
+@media screen and (min-width: 1000px){
+    footer{
+        max-width: 960px; /* typical value of wrapper max width*/
+        margin: 0 auto;
+    }
+}
