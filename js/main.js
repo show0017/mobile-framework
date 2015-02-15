@@ -84,19 +84,24 @@ var siteNavigator = (function(){
         return false;
     }
 
+    var animatePage = function(pg){
+        pg.classList.add("active-page");
+    }
+
     //Deal with history API and switching divs
     var loadPage = function( url ){
         if(url == null){
             //home page first call
-            pages[0].style.display = 'block';
+            pages[0].classList.add("show");
             history.replaceState(null, null, "#home");
         }else{
             for(var i=0; i < numPages; i++){
                 if(pages[i].id == url){
-                    pages[i].style.display = "block";
+                    pages[i].className=("show");
+                    setTimeout(animatePage, 10, pages[i]);
                     history.pushState(null, null, "#" + url);
                 }else{
-                    pages[i].style.display = "none";
+                    pages[i].className = "hide";
                 }
             }/*for loop on pages*/
 
