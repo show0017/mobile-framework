@@ -40,26 +40,39 @@ var svgIcon = (function(){
 var siteNavigator = (function(){
     /* TODO: optimize any code that is repeated in this module or even sepatate corresponding
     code snippets to anothe meaningful module. */
-    var pages = [];
-    var links=[];
+    var pages = {};
+    var links={};
     var numLinks = 0;
     var numPages = 0;
 
     var initNavBarListeners = function(){
-        pages = document.querySelectorAll('[data-role="page"]');
-        numPages = pages.length;
-        links = document.querySelectorAll('[data-role="pagelink"]');
-        numLinks = links.length;
-        for(var i=0;i<numLinks; i++){
-            //either add a touch or click listener
-         if(detectTouchSupport( )){
-           links[i].addEventListener("touchend", handleTouch, false);
-         }
-            links[i].addEventListener("click", handleNav, false);
+        var pagesArray = document.querySelectorAll('[data-role="page"]');
+        numPages = pagesArray.length;
+        var linksArray = document.querySelectorAll('[data-role="pagelink"]');
+        numLinks = linksArray.length;
+
+        /* TODO: add check that lenght of links is equal to lenght of pages and
+        given ids are equal to given links href.*/
+
+        /* save pages into js object where the key is the same as the given page id*/
+        for(var i=0; i< numPages; i++){
+            pages[pagesArray[i].getAttribute("id")] = pagesArray[i];
         }
+        delete pagesArray; //Free the memory to increase performance.
+
+        for(var i=0;i<numLinks; i++){
+            links[linksArray[i].getAttribute("href")] = linksArray[i];
+            //either add a touch or click listener
+            if(detectTouchSupport( )){
+                linksArray[i].addEventListener("touchend", handleTouch, false);
+            }
+            linksArray[i].addEventListener("click", handleNav, false);
+        }
+        delete linksArray; // Free the memory to increase perfromance.
+
         //add the listener for the back button
         window.addEventListener("popstate", browserBackButton, false);
-        loadPage(null);
+        doPageTransition(null, "home");
     }
 
         //handle the touchend event
@@ -79,8 +92,9 @@ var siteNavigator = (function(){
     var handleNav = function (ev){
         ev.preventDefault();
         var href = ev.target.href;
-        var parts = href.split("#");
-        loadPage( parts[1] );
+        var destPageId = href.split("#")[1];
+        var srcPageId = document.URL.split("#")[1];
+        doPageTransition(srcPageId, destPageId);
         return false;
     }
 
@@ -88,29 +102,27 @@ var siteNavigator = (function(){
         pg.classList.add("active-page");
     }
 
-    //Deal with history API and switching divs
-    var loadPage = function( url ){
-        if(url == null){
-            //home page first call
-            pages[0].classList.add("show");
-            history.replaceState(null, null, "#home");
-        }else{
-            for(var i=0; i < numPages; i++){
-                if(pages[i].id == url){
-                    pages[i].className=("show");
-                    setTimeout(animatePage, 10, pages[i]);
-                    history.pushState(null, null, "#" + url);
-                }else{
-                    pages[i].className = "hide";
-                }
-            }/*for loop on pages*/
+    var hidePage = function(pg){
+        pg.className = "hide";
+    }
 
-            for(var t=0; t < numLinks; t++){
-                links[t].className = "";
-                if(links[t].href == location.href){
-                    links[t].className = "active-link";
-                }
-            }/*for loop on navigation links*/
+    //Deal with history API and switching divs
+    var doPageTransition = function( srcPageId, destPageId ){
+
+        if(srcPageId == null){
+            //home page first call
+            pages[destPageId].classList.add("show");
+            history.replaceState(null, null, "#"+destPageId);
+        }else{
+//            pages[srcPageId].classList.remove("active-page");
+            /*Since opacity tranision takes 2sec as set on css file.
+              We must wait till the animation is finished to hide the last active page.*/
+//            setTimeout(hidePage, 10, pages[srcPageId]);
+            pages[srcPageId].className = "hide";
+
+            pages[destPageId].className =  "show";
+            setTimeout(animatePage, 10, pages[destPageId]);
+            history.pushState(null, null, "#" + destPageId);
         }/* else url is not null*/
     }
 
