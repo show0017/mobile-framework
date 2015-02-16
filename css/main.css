@@ -230,10 +230,14 @@ header{
 .active-page{
 /*    forwards value will keep the styles declared within the last specified keyframe i.e.
     opacity of destination page will remain 1. */
-    -webkit-animation: fade_in 4s ease-in-out forwards ;
-    -moz-animation   : fade_in 4s ease-in-out forwards ;
-    -o-animation     : fade_in 4s ease-in-out forwards ;
-    animation        : fade_in 4s ease-in-out forwards;
+    -webkit-animation: fade_in 4s ease-in-out forwards,
+                       zoome_in 4s ease-in-out forwards;
+    -moz-animation   : fade_in 4s ease-in-out forwards,
+                       zoome_in 4s ease-in-out forwards;
+    -o-animation     : fade_in 4s ease-in-out forwards,
+                       zoome_in 4s ease-in-out forwards;
+    animation        : fade_in 4s ease-in-out forwards,
+                       zoome_in 4s ease-in-out forwards;
 }
 
 .show{
@@ -272,6 +276,7 @@ footer {
 
 /* Animations
 ==================================================================*/
+/**********  FADE IN ANIMATION ************/
 @-webkit-keyframes fade_in{
     0%{opacity: 0;}
     100%{opacity: 1;}
@@ -287,4 +292,61 @@ footer {
 @keyframes fade_in {
     0%{opacity: 0;}
     100%{opacity: 1;}
+}
+/**********  ZOOM IN ANIMATION ************/
+@-webkit-keyframes zoome_in{
+    0%{
+        -webkit-transform: scale(0,0);
+        -moz-transform: scale(0,0);
+        -o-transform: scale(0,0);
+        transform: scale(0,0);
+    }
+    100%{
+        -webkit-transform: scale(1,1);
+        -moz-transform: scale(1,1);
+        -o-transform: scale(1,1);
+        transform: scale(1,1);
+    }
+}
+@-moz-keyframes zoome_in{
+    0%{
+        -webkit-transform: scale(0,0);
+        -moz-transform: scale(0,0);
+        -o-transform: scale(0,0);
+        transform: scale(0,0);
+    }
+    100%{
+        -webkit-transform: scale(1,1);
+        -moz-transform: scale(1,1);
+        -o-transform: scale(1,1);
+        transform: scale(1,1);
+    }
+}
+@-o-keyframes zoome_in{
+    0%{
+        -webkit-transform: scale(0,0);
+        -moz-transform: scale(0,0);
+        -o-transform: scale(0,0);
+        transform: scale(0,0);
+    }
+    100%{
+        -webkit-transform: scale(1,1);
+        -moz-transform: scale(1,1);
+        -o-transform: scale(1,1);
+        transform: scale(1,1);
+    }
+}
+@keyframes zoome_in{
+    0%{
+        -webkit-transform: scale(0,0);
+        -moz-transform: scale(0,0);
+        -o-transform: scale(0,0);
+        transform: scale(0,0);
+    }
+    100%{
+        -webkit-transform: scale(1,1);
+        -moz-transform: scale(1,1);
+        -o-transform: scale(1,1);
+        transform: scale(1,1);
+    }
 }
