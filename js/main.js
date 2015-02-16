@@ -121,7 +121,18 @@ var siteNavigator = (function(){
             pages[srcPageId].className = "hide";
 
             pages[destPageId].className =  "show";
-            setTimeout(animatePage, 10, pages[destPageId]);
+
+    /* It looks weired to set zero opacity after displaying the destination page. But
+    this is normal because page flicking (during the animation of page transition) will take
+    place if opacity was not set to zero. The class "show" is first added to the destination page
+    afterwards, animation takes place starting from opacity zero. This is the root cause of
+    flicking. To have smooth animation, we must set opacity to zero directly after displaying the
+    destination page and before starting the animation.*/
+            pages[destPageId].style.opacity = 0;
+
+            /* Wait for 30 msec before applying the animation of page transition. This gives the
+            browser time to update all the divs before applying the animation*/
+            setTimeout(animatePage, 30, pages[destPageId]);
             history.pushState(null, null, "#" + destPageId);
         }/* else url is not null*/
     }
