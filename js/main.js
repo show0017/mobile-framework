@@ -61,7 +61,9 @@ var siteNavigator = (function(){
         delete pagesArray; //Free the memory to increase performance.
 
         for(var i=0;i<numLinks; i++){
-            links[linksArray[i].getAttribute("href")] = linksArray[i];
+            /* Get href attribute and remove hashtag (first character in string value) using
+            substr method.*/
+            links[linksArray[i].getAttribute("href").substr(1)] = linksArray[i];
             //either add a touch or click listener
             if(detectTouchSupport( )){
                 linksArray[i].addEventListener("touchend", handleTouch, false);
@@ -114,12 +116,14 @@ var siteNavigator = (function(){
             pages[destPageId].classList.add("show");
             history.replaceState(null, null, "#"+destPageId);
         }else{
-//            pages[srcPageId].classList.remove("active-page");
-            /*Since opacity tranision takes 2sec as set on css file.
-              We must wait till the animation is finished to hide the last active page.*/
-//            setTimeout(hidePage, 10, pages[srcPageId]);
-            pages[srcPageId].className = "hide";
+            /* Set active-link class to the corresponding link in Nav-Bar*/
+            links[srcPageId].className = "";
+            links[destPageId].className = "active-link";
 
+            /* Set active-page class to the corresponding page. First hide the current
+            page, then show the destination page. Finally start animation while showing
+            the destiation page.*/
+            pages[srcPageId].className = "hide";
             pages[destPageId].className =  "show";
 
     /* It looks weired to set zero opacity after displaying the destination page. But
@@ -134,7 +138,7 @@ var siteNavigator = (function(){
             browser time to update all the divs before applying the animation*/
             setTimeout(animatePage, 30, pages[destPageId]);
             history.pushState(null, null, "#" + destPageId);
-        }/* else url is not null*/
+        }/* else srcPageId is not null*/
     }
 
     //TODO: Need a listener for the popstate event to handle the back button
