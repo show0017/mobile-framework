@@ -57,7 +57,7 @@ Menu Navigation button. */
 html{
 	width:100%;
 	height:100%;
-    background-color:#333;
+    background-color:#475500;
     font-family: Calibri, Arial, Helvetica, sans-serif;
     padding: 0 2%;
 }
@@ -105,10 +105,10 @@ Nav Bar
     color: #FFF;
 }
 .nav [data-role="pagelink"].active-link{
-    color: #FF0;
+    color: #B1D400; /* Hue base color*/
 }
 .nav [data-role="pagelink"]:hover {
-    background-color: #ccc;
+    background-color: #87A100;
 }
 
 /* According to the height of main_content class, the side menu backgound color will be filled.
@@ -128,7 +128,7 @@ main contents are shorter than side menu height. */
     position: relative;
     max-width: 70em;
     width: 100%;
-    background-color: #f4f4f4;
+    background-color: #B0B292;
     margin: 0 auto;
 }
 body.active .main_content:before {
@@ -139,7 +139,7 @@ body.active .main_content:before {
     left: -100%;
     width: 100%;
     height: 100%;
-    background-color: #4e4e4e;
+    background-color: #49550F; /* TODO: Check whether you should use different color or not.*/
 }
 
 @media all and (max-width:720px){
@@ -185,7 +185,7 @@ body.active .main_content:before {
       padding: 12px;
   }
  .nav [data-role="pagelink"]:hover {
-      background-color:#5C5C5C;
+      background-color: #87A100;
   }
 }
 
@@ -196,7 +196,7 @@ body.active .main_content:before {
 /* Header Styling
 ============================================================*/
 header{
-    background: #2db34a;
+    background: #E2E5BB;
 }
 
 [data-role="header"] h1{
@@ -262,7 +262,7 @@ body {
 }
 
 footer {
-    background: #2db34a;
+    background: #E2E5BB;
     position: absolute;
     left: 2%; /* Typical to custom padding added to html tag*/
     right: 2%; /* Typical to custom padding added to html tag*/
