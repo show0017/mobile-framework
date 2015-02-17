@@ -97,7 +97,17 @@ Nav Bar
 .nav ul li {
     display: inline-block;
     text-align: left;
+    width: 33.33%;
+    border-left: 1px solid #717171;
+    border-right: 1px solid #717171;
 }
+.nav ul li:first-child{
+    border-right-width: 0px;
+}
+.nav ul li:last-child{
+    border-left-width: 0px;
+}
+
 .nav [data-role="pagelink"] {
     display: block;
     padding: 10px 12px;
@@ -178,6 +188,9 @@ body.active .main_content:before {
   }
   .nav ul li {
       display: block;
+      width: 100%;
+      border-left-width: 0px;
+      border-right-width: 0px;
   }
  .nav [data-role="pagelink"] {
       border-bottom: 1px solid #3E3E3E;
