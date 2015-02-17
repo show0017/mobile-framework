@@ -77,7 +77,7 @@ h2, h3, p{
 /*
 Nav Bar
 ==============================================================*/
-#svg-hamburger {
+#hamburger-menu {
     display: none;
 }
 
@@ -143,7 +143,7 @@ body.active .main_content:before {
 }
 
 @media all and (max-width:720px){
-  #svg-hamburger{
+  #hamburger-menu{
       display: inline-block;
   }
 
@@ -190,13 +190,13 @@ body.active .main_content:before {
 }
 
 @media screen and (max-width:500px){
-    #svg-hamburger{
+    #hamburger-menu{
         width: 40px;
         height: 40px;
     }
 }
 @media screen and (max-width:440px){
-    #svg-hamburger{
+    #hamburger-menu{
         width: 32px;
         height: 32px;
     }

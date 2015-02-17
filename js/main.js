@@ -1,34 +1,65 @@
-var svgIcon = (function(){
+var svgIcons = (function(){
 
-    var toggled = false;
-    var snapCanvas;
-    var load = function(svgId, svgUrl){
-        /* Load hamburger svg icon that represents menu icon to html. */
-	var svgElement = document.getElementById(svgId);
-    snapCanvas = Snap( svgElement );
-//    snapCanvas.attr( 'viewBox', '0 0 32 32' );
-    Snap.load( svgUrl, function (fragment) {
-			var g = fragment.select( 'g' );
-			snapCanvas.append( g );
-    });
-    /* Execute hamburger icon animation. */
-    svgElement.addEventListener("click", toggle);
+    var load = function(){
+        /* Load all svg images and set their click/touch listeners. */
+        var svgElementsArray = document.querySelectorAll("svg[data-icon-name]");
+        for(var i=0; i<svgElementsArray.length; i++){
+            var svgElement = svgElementsArray[i];
+
+            /* Get a reference to the embedded svg tag in the HTML document using Snap SVG*/
+            var snapCanvas = Snap( svgElement );
+
+            /* SVG tag must have a custom data set whose value matches the keys of
+            svgIconsConfig object that is defined in svgicons-config.js */
+            var iconNameDataSet = svgElement.getAttribute("data-icon-name");
+
+            /* Get the value of the corresponding configuration object for each SVG.*/
+            var svgConfig= svgIconsConfig[iconNameDataSet];
+
+            /* Load SVG group content into HTML doc through snap svg canvas.
+            Note that JS Closure must have been used because load method is asynchronous
+            and snap svg canvas must be locked to load the vector graphic inside svg
+            element correctly.*/
+            Snap.load( svgConfig.url, (function (myCanvas) {
+                return function(fragment){
+                    var g = fragment.select( 'g' );
+                    myCanvas.append( g );
+                }
+            })(snapCanvas));
+
+            /* Click/Touch listener will be set to the anchor tag that represents
+            the parent node of SVG tag in HTML document. Exception for hamburger menu,
+            the listener will be set to SVG tag itself.*/
+            var targetElem = ("hamburgerCross" === iconNameDataSet)?
+                svgElement: svgElement.parentNode;
+
+            /* TODO: Add touch support */
+            /* JS Closure must be used to lock the canvas and the configurations of
+            each svg separately. Note that initial value of toggle flag is false.*/
+            targetElem.addEventListener("click",
+                    targetElem.myToggleFunc = toggle(svgConfig, snapCanvas, false));
+        }
     }
 
-    var toggle = function(){
-        for( var i = 0; i < hamburgerCross.animation.length; i++ ) {
-			var a = hamburgerCross.animation[ i ];
-            var el = snapCanvas.select( a.el );
-            var animProp = toggled ? a.animProperties.from :
-                        a.animProperties.to;
-            var val = animProp.val;
+    var toggle = function(config, canvas, toggled){
+        return function(){
+            /* Loop on animation configurations of the given SVG. Select the
+            given id, parse the attribute of that id. Finally apply the attribute
+            to the id using snap svg library.*/
+            for( var i = 0; i < config.animation.length; i++ ) {
+                var a = config.animation[ i ];
+                var el = canvas.select( a.el );
+                var animProp = toggled ?
+                    a.animProperties.from : a.animProperties.to;
+                var val = animProp.val;
 
-			if( animProp.before ) {
-				el.attr( JSON.parse( animProp.before ) );
-			}
-            el.attr( JSON.parse( val ) );
-        }/*  for loop*/
-        toggled = !toggled;
+                if( animProp.before ) {
+                    el.attr( JSON.parse( animProp.before ) );
+                }
+                el.attr( JSON.parse( val ) );
+            }/*  for loop*/
+            toggled = !toggled;
+        }
     }
 
     return{
@@ -92,7 +123,11 @@ var siteNavigator = (function(){
     //handle the click event
     var handleNav = function (ev){
         ev.preventDefault();
-        var href = ev.target.href;
+        /* Since the handlers of click/touch listeners are registered using bubbling
+        propatation. Also the handlers are registered for acnhor tags not for SVG tags.
+        Accordingly, currentTarget must be used instead of target to get href attribute
+        of anchor tag.*/
+        var href = ev.currentTarget.href;
         var destPageId = href.split("#")[1];
         var srcPageId = document.URL.split("#")[1];
         doPageTransition(srcPageId, destPageId);
@@ -118,6 +153,11 @@ var siteNavigator = (function(){
             /* Set active-link class to the corresponding link in Nav-Bar*/
             links[srcPageId].className = "";
             links[destPageId].className = "active-link";
+
+            /* Reverse the animation of the source page's svg icon .
+            The destination page animation will take place upon clicking the anchor/svg*/
+            links[srcPageId].myToggleFunc();
+
 
             /* Set active-page class to the corresponding page. First hide the current
             page, then show the destination page. Finally start animation while showing
@@ -175,7 +215,7 @@ var siteNavigator = (function(){
 
 document.addEventListener("DOMContentLoaded", function(){
 
-    svgIcon.load("svg-hamburger", hamburgerCross.url);
+    svgIcons.load();
 
     siteNavigator.initNavBarListeners();
     /* Execute HTML animatin of hamburger menu.
@@ -184,7 +224,7 @@ document.addEventListener("DOMContentLoaded", function(){
     2. Handler for svg icon animation to change it from 3 staked lines to x
     */
     window.scrollTo(0, 1);
-    var hamburgerMenu = document.querySelector("#svg-hamburger");
+    var hamburgerMenu = document.querySelector("#hamburger-menu");
     hamburgerMenu.addEventListener("click", function(e){
         e.preventDefault();
         document.body.classList.toggle("active");
