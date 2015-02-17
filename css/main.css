@@ -113,6 +113,16 @@ Nav Bar
     padding: 10px 12px;
     text-decoration: none;
     color: #FFF;
+    position: relative; /* To align text verticall, position the parent relatively then
+    position the child absolutely. Set the height of the child node and adjust the
+    padding/margin according to used font size.*/
+
+}
+.nav [data-role="pagelink"] span{
+    position: absolute;
+    margin-left: 4px;
+    height: 32px; /* Same as the hieght of SVG tag in HTML document.*/
+    padding-top: 6px;
 }
 .nav [data-role="pagelink"].active-link{
     color: #B1D400; /* Hue base color*/
