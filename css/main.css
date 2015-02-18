@@ -70,8 +70,6 @@ h2, h3, p{
     max-width: 960px;
     margin: 0 auto;
     overflow: hidden;
-/*    width: 100%;*/
-/*    outline: 1px solid red;*/
 }
 
 /*
@@ -234,12 +232,26 @@ header{
 }
 
 [data-role="header"] h1{
-  text-shadow: 1px 1px 1px #0cf;
-  color:#d4d4d4;
+  text-shadow: 3px 2px 2px #475500;
+-webkit-text-stroke: 1px #475500;
+  color: white;
   text-align:center;
   letter-spacing:0.3rem;
   word-spacing: 1rem;
   font-variant:small-caps;
+-webkit-animation: text-stretch 1s infinite;
+-webkit-animation-direction: alternate;
+}
+
+@-webkit-keyframes text-stretch {
+			0% {
+				-webkit-text-stroke: 10px #475500;
+				letter-spacing: 0;
+			}
+			100% {
+				-webkit-text-stroke: 20px red;
+				letter-spacing: 10px;
+			}
 }
 
 [data-rel="back"]{
