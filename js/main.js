@@ -180,7 +180,7 @@ var siteNavigator = (function(){
         }/* else srcPageId is not null*/
     }
 
-    //TODO: Need a listener for the popstate event to handle the back button
+    //Listener for the popstate event to handle the back button
     var browserBackButton = function (ev){
       url = location.hash;  //hash will include the "#"
       //update the visible div and the active tab

@@ -39,15 +39,37 @@ var svgIconsConfig = {
             el : '#windows',
             animProperties : {
                 from : { val : '{"fill": "#F7FF2A"}' },
-                to : { val : '{"fill": "#000000"}' }
+                to : { val : '{"fill": "#B0B292"}' }
             }
         }
     ]
 
  },
-// location:{
-//     url: 'svg/icon_location.svg',
-// },
+location:{
+    url: 'svg/icon_location.svg',
+    animation : [
+            {
+                el : '#pin',
+                animProperties : {
+                    from : { val : '{"fill": "#B0B292"}' },
+                    to : { val : '{"fill": "#F7FF2A"}' }             }
+            },
+            {
+                el : '#pin',
+                animProperties : {
+                    from : { val : '{"path": "M216,102.1c0,50.3-41.9,59.7-61.6,108.1c-1.6,3.9-7.1,3.9-8.7,0c-17.8-43.6-53.6-55.5-60.4-94.4 c-6.7-38.2,19.7-75.7,58.4-79.3C182.9,32.8,216,63.6,216,102.1z M184.9,102.1c0-19.2-15.6-34.8-34.8-34.8s-34.8,15.6-34.8,34.8 s15.6,34.8,34.8,34.8C169.3,136.9,184.9,121.3,184.9,102.1z"}'},
+                    to : { val :  '{"path" : "M216,65.9c0,50.3-41.9,59.7-61.6,108.1c-1.6,3.9-7.1,3.9-8.7,0c-17.8-43.6-53.6-55.5-60.4-94.4 C78.6,41.4,105,3.9,143.7,0.3C182.9-3.4,216,27.4,216,65.9z M184.9,65.9c0-19.2-15.6-34.8-34.8-34.8s-34.8,15.6-34.8,34.8 s15.6,34.8,34.8,34.8C169.3,100.7,184.9,85.1,184.9,65.9z"}'}
+                }
+            },
+            {
+                el : '#base',
+                animProperties : {
+                    from : { val : '{"fill": "#B0B292"}' },
+                    to : { val : '{"fill": "#F7FF2A"}'}
+                }
+            }
+    ]
+},
  contacts:{
     url: 'svg/icon_contacts.svg',
     animation : [
@@ -55,6 +77,13 @@ var svgIconsConfig = {
             el : '#eyes-tie-mouth-group',
             animProperties : {
                 from : { val : '{"fill": "#000000"}' },
+                to : { val : '{"fill": "#F7FF2A"}' }
+            }
+        },
+        {
+            el : "#body",
+            animProperties :{
+                from : { val : '{"fill": "#B0B292"}' },
                 to : { val : '{"fill": "#F7FF2A"}' }
             }
         }
