@@ -1,3 +1,33 @@
+var touchModule = (function(){
+
+    //Test for browser support of touch events
+    var detectTouchSupport = function ( ){
+      msGesture = navigator && navigator.msPointerEnabled &&
+                    navigator.msMaxTouchPoints > 0 && MSGesture;
+      var touchSupport = (("ontouchstart" in window) || msGesture ||
+                          (window.DocumentTouch && document instanceof DocumentTouch));
+      return touchSupport;
+    }
+
+    //handle the touchend event
+    var handleTouch = function (ev){
+        ev.preventDefault();
+        ev.stopImmediatePropagation();
+        var touch = evt.changedTouches[0];        //this is the first object touched
+        var newEvt = document.createEvent("MouseEvent");
+        //old method works across browsers, though it is deprecated.
+        newEvt.initMouseEvent("click", true, true, window, 1, touch.screenX, touch.screenY,
+                              touch.clientX, touch.clientY);
+        ev.originalTarget.dispatchEvent(newEvt);
+        //send the touch to the click handler
+    }
+
+    return{
+        detectTouchSupport : detectTouchSupport,
+        handleTouch : handleTouch
+    }
+})();
+
 var svgIcons = (function(){
 
     var load = function(){
@@ -74,6 +104,7 @@ var siteNavigator = (function(){
     var links={};
     var numLinks = 0;
     var numPages = 0;
+    var currentPageId = null;
 
     var initNavBarListeners = function(){
         var pagesArray = document.querySelectorAll('[data-role="page"]');
@@ -95,8 +126,8 @@ var siteNavigator = (function(){
             substr method.*/
             links[linksArray[i].getAttribute("href").substr(1)] = linksArray[i];
             //either add a touch or click listener
-            if(detectTouchSupport( )){
-                linksArray[i].addEventListener("touchend", handleTouch, false);
+            if(touchModule.detectTouchSupport()){
+                linksArray[i].addEventListener("touchend", touchModule.handleTouch, false);
             }
             linksArray[i].addEventListener("click", handleNav, false);
         }
@@ -105,19 +136,6 @@ var siteNavigator = (function(){
         //add the listener for the back button
         window.addEventListener("popstate", browserBackButton, false);
         doPageTransition(null, "home");
-    }
-
-        //handle the touchend event
-    var handleTouch = function (ev){
-        ev.preventDefault();
-        ev.stopImmediatePropagation();
-        var touch = evt.changedTouches[0];        //this is the first object touched
-        var newEvt = document.createEvent("MouseEvent");
-        //old method works across browsers, though it is deprecated.
-        newEvt.initMouseEvent("click", true, true, window, 1, touch.screenX, touch.screenY,
-                              touch.clientX, touch.clientY);
-        ev.originalTarget.dispatchEvent(newEvt);
-        //send the touch to the click handler
     }
 
     //handle the click event
@@ -130,7 +148,7 @@ var siteNavigator = (function(){
         var href = ev.currentTarget.href;
         var destPageId = href.split("#")[1];
         var srcPageId = document.URL.split("#")[1];
-        doPageTransition(srcPageId, destPageId);
+        doPageTransition(srcPageId, destPageId, true);
         return false;
     }
 
@@ -143,13 +161,15 @@ var siteNavigator = (function(){
     }
 
     //Deal with history API and switching divs
-    var doPageTransition = function( srcPageId, destPageId ){
+    var doPageTransition = function( srcPageId, destPageId, isHistoryPush, isBackBtnPressed ){
 
         if(srcPageId == null){
+
             //home page first call
             pages[destPageId].classList.add("show");
             history.replaceState(null, null, "#"+destPageId);
         }else{
+
             /* Set active-link class to the corresponding link in Nav-Bar*/
             links[srcPageId].className = "";
             links[destPageId].className = "active-link";
@@ -157,7 +177,9 @@ var siteNavigator = (function(){
             /* Reverse the animation of the source page's svg icon .
             The destination page animation will take place upon clicking the anchor/svg*/
             links[srcPageId].myToggleFunc();
-
+            /* in case back button is pressed, toggle the svg anchor animation of the destination page.*/
+            if(isBackBtnPressed)
+                links[destPageId].myToggleFunc();
 
             /* Set active-page class to the corresponding page. First hide the current
             page, then show the destination page. Finally start animation while showing
@@ -165,50 +187,39 @@ var siteNavigator = (function(){
             pages[srcPageId].className = "hide";
             pages[destPageId].className =  "show";
 
-    /* It looks weired to set zero opacity after displaying the destination page. But
-    this is normal because page flicking (during the animation of page transition) will take
-    place if opacity was not set to zero. The class "show" is first added to the destination page
-    afterwards, animation takes place starting from opacity zero. This is the root cause of
-    flicking. To have smooth animation, we must set opacity to zero directly after displaying the
-    destination page and before starting the animation.*/
+            /* It looks weired to set zero opacity after displaying the destination page. But
+            this is normal because page flicking (during the animation of page transition) will take
+            place if opacity was not set to zero. The class "show" is first added to the destination page
+            afterwards, animation takes place starting from opacity zero. This is the root cause of
+            flicking. To have smooth animation, we must set opacity to zero directly after displaying the
+            destination page and before starting the animation.*/
             pages[destPageId].style.opacity = 0;
 
             /* Wait for 30 msec before applying the animation of page transition. This gives the
             browser time to update all the divs before applying the animation*/
             setTimeout(animatePage, 30, pages[destPageId]);
-            history.pushState(null, null, "#" + destPageId);
+
+            if (isHistoryPush)
+                history.pushState(null, null, "#" + destPageId);
+
+            currentPageId = destPageId;
         }/* else srcPageId is not null*/
     }
 
     //Listener for the popstate event to handle the back button
     var browserBackButton = function (ev){
-      url = location.hash;  //hash will include the "#"
+      ev.preventDefault();
+      var destPageId = location.hash.split("#")[1];  //hash will include the "#"
+
+      /*TODO: Check with Steve if there is js object or property that holds the source page id after
+      firing popstate event. */
+
       //update the visible div and the active tab
-      for(var i=0; i < numPages; i++){
-          if(("#" + pages[i].id) == url){
-            pages[i].style.display = "block";
-          }else{
-            pages[i].style.display = "none";
-          }
-      }
-      for(var t=0; t < numLinks; t++){
-        links[t].className = "";
-        if(links[t].href == location.href){
-          links[t].className = "active-link";
-        }
-      }
+      doPageTransition(currentPageId, destPageId, false, true);
+
     }
 
-    //Test for browser support of touch events
-    var detectTouchSupport = function ( ){
-      msGesture = navigator && navigator.msPointerEnabled &&
-                    navigator.msMaxTouchPoints > 0 && MSGesture;
-      var touchSupport = (("ontouchstart" in window) || msGesture ||
-                          (window.DocumentTouch && document instanceof DocumentTouch));
-      return touchSupport;
-    }
-
-    return{
+    return {
         initNavBarListeners : initNavBarListeners
     }
 })();
