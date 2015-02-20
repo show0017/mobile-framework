@@ -97,6 +97,73 @@ var svgIcons = (function(){
     }
 })();
 
+var geolocation = (function (){
+
+    var init = function(){
+
+      if( navigator.geolocation ){
+          var params = {enableHighAccuracy: false, timeout:3600, maximumAge:60000};
+          navigator.geolocation.getCurrentPosition( reportPosition, gpsError, params );
+
+          var canvas = document.createElement("canvas");
+          canvas.width = 400;
+          canvas.height = 400;
+          canvas.id = "canvas-map";
+
+          document.querySelector("#output").appendChild(canvas);
+
+      }else{
+        //browser does not support geolocation api
+        alert("Sorry, but your browser does not support location based awesomeness.")
+      }
+    }
+
+
+    var reportPosition = function ( position ){
+        var canvas = document.querySelector("#canvas-map");
+        var context = canvas.getContext("2d");
+
+        // Create new img element
+        var img = new Image();
+
+        img.onload = function( ){
+            console.debug("image has been loaded");
+            context.drawImage(img, 0, 0);
+            console.debug("image has been drawn on canvas");
+
+            var info = document.createElement("p");
+            info.innerHTML += "Latitude: " + position.coords.latitude + "&deg;<br/>"
+                + "Longitude: " + position.coords.longitude + "&deg;<br/>";
+
+            document.querySelector("#output").appendChild(info);
+        }
+
+        // Set source path
+        img.src = 'https://maps.googleapis.com/maps/api/staticmap?center=' +
+            position.coords.latitude+','+
+            position.coords.longitude+'&'+
+            'zoom=14'+ '&'+
+            'size=400x400'+'&'+
+            'markers=color:red'+'|'+
+            position.coords.latitude+','+
+            position.coords.longitude+'&'+
+            'key=AIzaSyCzGkfTYLGyBb9eM9bWgjlhmBdldBSBwNA';
+    }
+
+    var gpsError = function ( error ){
+      var errors = {
+        1: 'Permission denied',
+        2: 'Position unavailable',
+        3: 'Request timeout'
+      };
+      alert("Error: " + errors[error.code]);
+    }
+
+    return{
+        init: init
+    }
+})();
+
 var siteNavigator = (function(){
     /* TODO: optimize any code that is repeated in this module or even sepatate corresponding
     code snippets to anothe meaningful module. */
@@ -152,6 +219,19 @@ var siteNavigator = (function(){
         return false;
     }
 
+    var loadDynamicContents = function(pageId){
+        switch(pageId){
+            case "home":
+                break;
+            case "location":
+                geolocation.init();
+                break;
+            case "contacts":
+                break;
+            default:
+        }
+    }
+
     var animatePage = function(pg){
         pg.classList.add("active-page");
     }
@@ -187,6 +267,8 @@ var siteNavigator = (function(){
             pages[srcPageId].className = "hide";
             pages[destPageId].className =  "show";
 
+            loadDynamicContents(destPageId);
+
             /* It looks weired to set zero opacity after displaying the destination page. But
             this is normal because page flicking (during the animation of page transition) will take
             place if opacity was not set to zero. The class "show" is first added to the destination page
@@ -208,15 +290,14 @@ var siteNavigator = (function(){
 
     //Listener for the popstate event to handle the back button
     var browserBackButton = function (ev){
-      ev.preventDefault();
-      var destPageId = location.hash.split("#")[1];  //hash will include the "#"
+        ev.preventDefault();
+        var destPageId = location.hash.split("#")[1];  //hash will include the "#"
 
-      /*TODO: Check with Steve if there is js object or property that holds the source page id after
-      firing popstate event. */
+        /*TODO: Check with Steve if there is js object or property that holds the source page id after
+        firing popstate event. */
 
-      //update the visible div and the active tab
-      doPageTransition(currentPageId, destPageId, false, true);
-
+        //update the visible div and the active tab
+        doPageTransition(currentPageId, destPageId, false, true);
     }
 
     return {
