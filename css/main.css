@@ -328,6 +328,19 @@ footer {
     }
 }
 
+/* Location page styling
+==================================================================*/
+#inner-arch{
+    fill: #F7FF2A;
+    /* Since artboard size is 300x300, change point around which rotation will take place to be middle of artboard instead of 0 0 (top-left corner)*/
+    transform-origin: 150px 150px;
+    -webkit-animation:  rotate 1s linear infinite;
+    -moz-animation   :  rotate 1s linear infinite;
+    -o-animation     :  rotate 1s linear infinite;
+    animation        :  rotate 1s linear infinite;
+}
+
+
 /* Animations
 ==================================================================*/
 /**********  FADE IN ANIMATION ************/
@@ -405,7 +418,7 @@ footer {
     }
 }
 
-/**********  ROTATION ANIMATION ************/
+/**********  ROTATION & ZOOM-IN ANIMATION ************/
 @-webkit-keyframes rotation_and_zoom_in{
     0%{
         -webkit-transform:rotate(360deg) scale(0,0);
@@ -420,7 +433,7 @@ footer {
         transform:scale(1,1);
     }
 }
-@-moz-keyframes rotation{
+@-moz-keyframes rotation_and_zoom_in{
     0%{
         -webkit-transform:rotate(360deg) scale(0,0);
         -moz-transform:rotate(360deg) scale(0,0);
@@ -434,7 +447,7 @@ footer {
         transform:scale(1,1);
     }
 }
-@-o-keyframes rotation{
+@-o-keyframes rotation_and_zoom_in{
     0%{
         -webkit-transform:rotate(360deg) scale(0,0);
         -moz-transform:rotate(360deg) scale(0,0);
@@ -448,7 +461,7 @@ footer {
         transform:scale(1,1);
     }
 }
-@keyframes rotation{
+@keyframes rotation_and_zoom_in{
     0%{
         -webkit-transform:rotate(360deg) scale(0,0);
         -moz-transform:rotate(360deg) scale(0,0);
@@ -460,5 +473,40 @@ footer {
         -moz-transform:scale(1,1);
         -o-transform:scale(1,1);
         transform:scale(1,1);
+    }
+}
+
+/**********  ROTATE ANIMATION ************/
+@-webkit-keyframes rotate{
+
+    100%{
+        -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+@-moz-keyframes rotate{
+    100%{
+        -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+@-o-keyframes rotate{
+    100%{
+        -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+@keyframes rotate{
+    100%{
+        -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
     }
 }
