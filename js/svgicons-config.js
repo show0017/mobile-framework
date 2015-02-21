@@ -1,6 +1,7 @@
 var svgIconsConfig = {
  hamburgerCross : {
     url : 'svg/icon_hamburger_menu.svg',
+    externalAnimationTrigger: true,
     animation : [
             {
                 el : 'path:nth-child(1)',
@@ -26,6 +27,7 @@ var svgIconsConfig = {
     },
  home:{
     url: 'svg/icon_home.svg',
+    externalAnimationTrigger: true,
     animation : [
         {
             el : '#ceil',
@@ -47,6 +49,7 @@ var svgIconsConfig = {
  },
 location:{
     url: 'svg/icon_location.svg',
+    externalAnimationTrigger: true,
     animation : [
             {
                 el : '#pin',
@@ -72,6 +75,7 @@ location:{
 },
  contacts:{
     url: 'svg/icon_contacts.svg',
+    externalAnimationTrigger: true,
     animation : [
         {
             el : '#eyes-tie-mouth-group',
@@ -89,5 +93,10 @@ location:{
         }
     ]
 
+ },
+ loading:{
+    url: 'svg/icon_loading.svg',
+    externalAnimationTrigger: false, /* This means that animation will run directly without any external trigger from user*/
+    animation :[]
  }
 };

@@ -57,17 +57,19 @@ var svgIcons = (function(){
                 }
             })(snapCanvas));
 
-            /* Click/Touch listener will be set to the anchor tag that represents
-            the parent node of SVG tag in HTML document. Exception for hamburger menu,
-            the listener will be set to SVG tag itself.*/
-            var targetElem = ("hamburgerCross" === iconNameDataSet)?
-                svgElement: svgElement.parentNode;
+            if(true === svgConfig.externalAnimationTrigger){
+                /* Click/Touch listener will be set to the anchor tag that represents
+                the parent node of SVG tag in HTML document. Exception for hamburger menu,
+                the listener will be set to SVG tag itself.*/
+                var targetElem = ("hamburgerCross" === iconNameDataSet)?
+                    svgElement: svgElement.parentNode;
 
-            /* TODO: Add touch support */
-            /* JS Closure must be used to lock the canvas and the configurations of
-            each svg separately. Note that initial value of toggle flag is false.*/
-            targetElem.addEventListener("click",
-                    targetElem.myToggleFunc = toggle(svgConfig, snapCanvas, false));
+                /* TODO: Add touch support */
+                /* JS Closure must be used to lock the canvas and the configurations of
+                each svg separately. Note that initial value of toggle flag is false.*/
+                targetElem.addEventListener("click",
+                        targetElem.myToggleFunc = toggle(svgConfig, snapCanvas, false));
+            }
         }
     }
 
@@ -224,7 +226,7 @@ var siteNavigator = (function(){
             case "home":
                 break;
             case "location":
-                geolocation.init();
+                //geolocation.init();
                 break;
             case "contacts":
                 break;
