@@ -99,35 +99,18 @@ var svgIcons = (function(){
     }
 })();
 
-var geolocation = (function (){
+var position = (function (){
 
-    var containerDiv;
-    var svgLoadingIcon;
-    var canvas;
-    var locationInfoContainerDiv;
-    var info;
+    /* Note that these variables are going to be created only once so that we save memory
+    allocation for any new instances of these variables.*/
+    var svgLoadingIcon; //svg div whose id is "loading" in HTML document.
+    var locationInfoContainerDiv; // location info div whose id is "loc-info-container" in HTML
 
     var getCurrentLocation = function(){
 
       if( navigator.geolocation ){
           var params = {enableHighAccuracy: false, timeout:3600, maximumAge:60000};
           navigator.geolocation.getCurrentPosition( reportPosition, gpsError, params );
-
-          containerDiv= containerDiv? containerDiv: document.querySelector("#output");
-
-          if(!locationInfoContainerDiv){
-              locationInfoContainerDiv = document.createElement("div");
-              locationInfoContainerDiv.id = "info-container";
-          }
-
-          if(!canvas){
-              canvas = document.createElement("canvas");
-              locationInfoContainerDiv.appendChild(canvas);
-              canvas.width = 400;
-              canvas.height = 400;
-              canvas.id = "canvas-map";
-          }
-
       }else{
         //browser does not support geolocation api
         alert("Sorry, but your browser does not support location based awesomeness.")
@@ -136,22 +119,16 @@ var geolocation = (function (){
 
 
     var reportPosition = function ( position ){
+        var canvas = document.querySelector("#canvas-map");
         var context = canvas.getContext("2d");
 
         // Create new img element
         var img = new Image();
 
         img.onload = function( ){
-            console.debug("image has been loaded");
             context.drawImage(img, 0, 0);
-            console.debug("image has been drawn on canvas");
 
-            if(!info){
-                info = document.createElement("p");
-                locationInfoContainerDiv.appendChild(info);
-                containerDiv.appendChild(locationInfoContainerDiv);
-            }
-
+            var info = document.getElementById("lat-lon");
             info.innerHTML = "Latitude: " + position.coords.latitude + "&deg;<br/>"
                 + "Longitude: " + position.coords.longitude + "&deg;<br/>";
 
@@ -177,20 +154,26 @@ var geolocation = (function (){
         2: 'Position unavailable',
         3: 'Request timeout'
       };
+
+      /* Hide the loading icon svg before showing user notification. */
       svgLoadingIcon.style.display="none";
       alert("Error: " + errors[error.code]);
     }
 
-    var reloadSvgIcon= function(){
+    var resetPositionDIVs= function(){
+        /* Get a reference to svg loading icon and sibling node that contains map canvas and
+        paragraph for showing latitue and longitude. */
         if(!svgLoadingIcon){
             svgLoadingIcon = document.querySelector("#loading");
         }
-
-        svgLoadingIcon.style.display="block";
-
-        if (locationInfoContainerDiv){
-            locationInfoContainerDiv.style.display = "none";
+        if(!locationInfoContainerDiv){
+            locationInfoContainerDiv = document.querySelector("#loc-info-container");
         }
+
+        /* Always show loading icon hide the location information container div.*/
+        svgLoadingIcon.style.display="block";
+        locationInfoContainerDiv.style.display = "none";
+
     }
 
     return{
@@ -259,8 +242,10 @@ var siteNavigator = (function(){
             case "home":
                 break;
             case "location":
-                geolocation.resetPositionDIVs();
-                setTimeout(geolocation.getCurrentLocation, 2000);
+                /* Always make sure to display loading icon before showing map canvas*/
+                position.resetPositionDIVs();
+                /* wait for 2 sec before triggering the new location request. */
+                setTimeout(position.getCurrentLocation, 2000);
                 break;
             case "contacts":
                 break;
