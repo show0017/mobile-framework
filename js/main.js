@@ -101,18 +101,32 @@ var svgIcons = (function(){
 
 var geolocation = (function (){
 
-    var init = function(){
+    var containerDiv;
+    var svgLoadingIcon;
+    var canvas;
+    var locationInfoContainerDiv;
+    var info;
+
+    var getCurrentLocation = function(){
 
       if( navigator.geolocation ){
           var params = {enableHighAccuracy: false, timeout:3600, maximumAge:60000};
           navigator.geolocation.getCurrentPosition( reportPosition, gpsError, params );
 
-          var canvas = document.createElement("canvas");
-          canvas.width = 400;
-          canvas.height = 400;
-          canvas.id = "canvas-map";
+          containerDiv= containerDiv? containerDiv: document.querySelector("#output");
 
-          document.querySelector("#output").appendChild(canvas);
+          if(!locationInfoContainerDiv){
+              locationInfoContainerDiv = document.createElement("div");
+              locationInfoContainerDiv.id = "info-container";
+          }
+
+          if(!canvas){
+              canvas = document.createElement("canvas");
+              locationInfoContainerDiv.appendChild(canvas);
+              canvas.width = 400;
+              canvas.height = 400;
+              canvas.id = "canvas-map";
+          }
 
       }else{
         //browser does not support geolocation api
@@ -122,7 +136,6 @@ var geolocation = (function (){
 
 
     var reportPosition = function ( position ){
-        var canvas = document.querySelector("#canvas-map");
         var context = canvas.getContext("2d");
 
         // Create new img element
@@ -133,11 +146,17 @@ var geolocation = (function (){
             context.drawImage(img, 0, 0);
             console.debug("image has been drawn on canvas");
 
-            var info = document.createElement("p");
-            info.innerHTML += "Latitude: " + position.coords.latitude + "&deg;<br/>"
+            if(!info){
+                info = document.createElement("p");
+                locationInfoContainerDiv.appendChild(info);
+                containerDiv.appendChild(locationInfoContainerDiv);
+            }
+
+            info.innerHTML = "Latitude: " + position.coords.latitude + "&deg;<br/>"
                 + "Longitude: " + position.coords.longitude + "&deg;<br/>";
 
-            document.querySelector("#output").appendChild(info);
+            svgLoadingIcon.style.display="none";
+            locationInfoContainerDiv.style.display = "block";
         }
 
         // Set source path
@@ -158,11 +177,25 @@ var geolocation = (function (){
         2: 'Position unavailable',
         3: 'Request timeout'
       };
+      svgLoadingIcon.style.display="none";
       alert("Error: " + errors[error.code]);
     }
 
+    var reloadSvgIcon= function(){
+        if(!svgLoadingIcon){
+            svgLoadingIcon = document.querySelector("#loading");
+        }
+
+        svgLoadingIcon.style.display="block";
+
+        if (locationInfoContainerDiv){
+            locationInfoContainerDiv.style.display = "none";
+        }
+    }
+
     return{
-        init: init
+        getCurrentLocation: getCurrentLocation,
+        resetPositionDIVs: resetPositionDIVs
     }
 })();
 
@@ -226,7 +259,8 @@ var siteNavigator = (function(){
             case "home":
                 break;
             case "location":
-                //geolocation.init();
+                geolocation.resetPositionDIVs();
+                setTimeout(geolocation.getCurrentLocation, 2000);
                 break;
             case "contacts":
                 break;
