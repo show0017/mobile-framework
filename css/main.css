@@ -62,6 +62,35 @@ html{
     padding: 0 2%;
 }
 
+/* This class is applied on body tag so that root font-size is set according to different screen
+sizes. Then any text paragraph can be set using rem unit. */
+.flexible-font{
+    font-size: 1.2vw;
+}
+@media all and (max-width:1000px){
+    .flexible-font{
+        font-size: 1.6vw;
+    }
+}
+
+@media all and (max-width:800px){
+    .flexible-font{
+        font-size: 2vw;
+    }
+}
+
+@media all and (max-width:600px){
+    .flexible-font{
+        font-size: 2.4vw;
+    }
+}
+
+@media all and (max-width:400px){
+    .flexible-font{
+        font-size: 4vw;
+    }
+}
+
 h2, h3, p{
 	padding:0.2rem 2rem;
 }
@@ -148,7 +177,7 @@ main contents are shorter than side menu height. */
 .main_content {
     padding: 1.5em;
     position: relative;
-    max-width: 70em;
+    /*max-width: 70em;*/
     width: 100%;
     background-color: #B0B292;
     margin: 0 auto;

@@ -2,7 +2,7 @@
 <html lang="">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width">
     <title>Web for mobile framework assignment</title>
     <link rel="stylesheet" href="css/main.css">
     <script src="js/snap.svg.js"></script>
@@ -10,7 +10,7 @@
     <script src="js/main.js"></script>
 </head>
 
-<body>
+<body class="flexible-font">
 
 <!-- Containter DIV for the whole page.-->
 <div class="wrapper">
@@ -58,6 +58,10 @@
           <h2>Location</h2>
           <div id="output">
               <svg id="loading" data-icon-name="loading" width="20%" height="20%" viewBox="0 0 300 300" ></svg>
+              <div id="loc-info-container" class="hide">
+                  <canvas id="canvas-map" width="400px" height="400px"></canvas>
+                  <p id="lat-lon">Latitude,Longitude</p>
+              </div>
           </div>
         </section> <!--  End of location section-->
         <section data-role="page" id="contacts">
