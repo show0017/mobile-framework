@@ -45,12 +45,12 @@ Menu Navigation button. */
     margin-left: 5%;
 /*    outline: 1px solid red;*/
 }
-.col-header:first-child{
+.col-header:last-child{
+    width: 85%;
     margin-left: 0%;
+
 }
-.col-header:nth-child(2){
-    width: 70%; /* Give larger space for app title to breath. */
-}
+
 /*
 ===============================================================*/
 
@@ -287,16 +287,6 @@ header{
 			}
 }
 
-[data-rel="back"]{
-    float:left;
-    color:#fff;
-    padding:0.3rem 1rem;
-    color: #0C3;
-    font-size: 1rem;
-    line-height:2.0rem;
-    text-decoration:none;
-/*  display:none;*/
-}
 /*
 ============================================================*/
 
