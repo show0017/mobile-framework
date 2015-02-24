@@ -272,7 +272,8 @@ header{
   letter-spacing:0.3rem;
   word-spacing: 1rem;
   font-variant:small-caps;
--webkit-animation: text-stretch 1s infinite;
+  /* increase the dueration of text stretch animation so that it won't capture the users's eye*/
+-webkit-animation: text-stretch 2s infinite;
 -webkit-animation-direction: alternate;
 }
 
