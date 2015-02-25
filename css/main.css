@@ -60,6 +60,8 @@ html{
     background-color:#475500;
     font-family: Calibri, Arial, Helvetica, sans-serif;
     padding: 0 2%;
+    position: relative;
+    min-height: 100%;
 }
 
 /* This class is applied on body tag so that root font-size is set according to different screen
@@ -99,10 +101,15 @@ h1,h2,h3,h4{
     font-family: Tahoma, Verdana, Geneva;
 }
 
+body{
+    /* Let the body fills the whole page vertically, this helps in Sticky Footer creation. */
+    height: 100%;
+}
 .wrapper {
     max-width: 960px;
     margin: 0 auto;
-    overflow: hidden;
+    /* Let the wrapper fills the whole page vertically, this helps in Sticky Footer creation.*/
+    height: 100%;
 }
 
 /*
@@ -162,18 +169,13 @@ Nav Bar
     background-color: #87A100;
 }
 
-/* According to the height of main_content class, the side menu backgound color will be filled.
-If you remove this line, Not all menu items will be styled with background color in case
-main contents are shorter than side menu height. */
-.main_content{
-    min-height: 400px;
-}
 .main_content,
 .nav {
     transition: 0.5s margin ease;
     display: block;
-    position: relative;
+/*    position: relative;*/
 }
+
 .main_content {
     padding: 1.5em;
     position: relative;
@@ -181,6 +183,12 @@ main contents are shorter than side menu height. */
     width: 100%;
     background-color: #B0B292;
     margin: 0 auto;
+    /* Subtract height of header as well as navigation bar and let the main_content have
+    the remaining height of the page. This helps in Sticky Footer creation.
+    Note that if page contains has long contents (such as location page), footer will be pushed
+    down. It will not stick over the page content. Otherwise , it will stick at the bottom
+    of the short page content*/
+    min-height:  72%;
 }
 body.active .main_content:before {
     content: "";
@@ -209,6 +217,9 @@ body.active .main_content:before {
       margin-left: 0;
       margin-right: 0;/* smooth the animation when user closes hamburger menu*/
       width: 100%;
+      /*Since navigation bar disappears on small screen sizes, update height. This keeps the
+      Sticky Footer in its location for small screen sizes*/
+      min-height: 82%;
   }
 
   body.active .nav {
@@ -262,6 +273,8 @@ body.active .main_content:before {
 ============================================================*/
 header{
     background: #E2E5BB;
+    /*Make sure that header height is fixed whether hamburger menu exists or not.*/
+    height: 8%;
 }
 
 [data-role="header"] h1{
@@ -323,30 +336,16 @@ header{
 
 /* Sticky Footer styling
 ===============================================================*/
-html {
-    position: relative;
-    min-height: 100%;
-}
-body {
-    margin: 0 0 60px; /* bottom = footer height */
-}
-
 footer {
     background: #E2E5BB;
+    /* Adjust position of footer with respect to main content div.*/
     position: absolute;
-    left: 2%; /* Typical to custom padding added to html tag*/
-    right: 2%; /* Typical to custom padding added to html tag*/
-    bottom: 0;
+    left: 0;
+    bottom: -60px;
     height: 60px;
-    width: 96%; /* width = 100% - 2*2% = 96%*/
+    width: 100%; /* width = 100% - 2*2% = 96%*/
 }
 
-@media screen and (min-width: 1000px){
-    footer{
-        max-width: 960px; /* typical value of wrapper max width*/
-        margin: 0 auto;
-    }
-}
 
 /* Location page styling
 ==================================================================*/
