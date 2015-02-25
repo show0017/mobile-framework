@@ -340,6 +340,8 @@ document.addEventListener("DOMContentLoaded", function(){
     var hamburgerMenu = document.querySelector("#hamburger-menu");
     hamburgerMenu.addEventListener("click", function(e){
         e.preventDefault();
-        document.body.classList.toggle("active");
+//        document.body.classList.toggle("active");
+        var container = document.querySelector(".st-container");
+        container.classList.toggle("st-menu-open");
     });
 });

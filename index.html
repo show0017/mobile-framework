@@ -13,7 +13,23 @@
 <body class="flexible-font">
 
 <!-- Containter DIV for the whole page.-->
-<div class="wrapper">
+<div class="wrapper st-container st-effect-7">
+
+    <div class="st-pusher">
+        <!--    Navigation bar-->
+        <nav class="nav st-menu st-effect-7" role="navigation">
+            <ul>
+                <li><a href="#home" data-role="pagelink" class="active-link">
+                    <svg data-icon-name="home" width="32" height="32" viewBox="0 0 300 300"></svg><span>Home</span></a></li><!--
+                --><li><a href="#location" data-role="pagelink">
+                    <svg data-icon-name="location" width="32" height="32" viewBox="0 0 300 300"></svg><span>Location</span></a></li><!--
+                --><li><a href="#contacts" data-role="pagelink">
+                    <svg data-icon-name="contacts" width="32" height="32" viewBox="0 0 300 300"></svg><span>Contacts</span></a></li>
+            </ul>
+        </nav>
+
+        <div class="st-content"><!-- this is the wrapper for the content -->
+            <div class="st-content-inner"><!-- extra div for emulating position:fixed of the menu -->
 
     <header data-role="header" class="col-container clearfix">
         <div class="col-header">
@@ -26,20 +42,8 @@
 
     </header>
 
-<!--    Navigation bar-->
-    <nav class="nav clearfix" role="navigation">
-        <ul>
-            <li><a href="#home" data-role="pagelink" class="active-link">
-                <svg data-icon-name="home" width="32" height="32" viewBox="0 0 300 300"></svg><span>Home</span></a></li><!--
-            --><li><a href="#location" data-role="pagelink">
-                <svg data-icon-name="location" width="32" height="32" viewBox="0 0 300 300"></svg><span>Location</span></a></li><!--
-            --><li><a href="#contacts" data-role="pagelink">
-                <svg data-icon-name="contacts" width="32" height="32" viewBox="0 0 300 300"></svg><span>Contacts</span></a></li>
-        </ul>
-    </nav>
-
 <!--    Main content of the website. It consists of three pages-->
-    <div class="main_content">
+    <div>
         <section data-role="page" id="home" class="active-page">
             <h2>Home</h2>
             <p>This app is just an amazing one. You can use it to grab all contacts from your
@@ -68,6 +72,9 @@
         </section> <!--  End of contacts section-->
         <footer>Fixed Footer</footer>
     </div><!--  End of whole website main content div -->
+            </div><!-- /st-content-inner -->
+        </div><!-- /st-content -->
+    </div> <!-- st-pusher div -->
 </div><!--  End of wrapper div-->
 </body>
 </html>
