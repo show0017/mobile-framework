@@ -17,7 +17,7 @@
 
     <div class="st-pusher">
         <!--    Navigation bar-->
-        <nav class="nav st-menu st-effect-7" role="navigation">
+        <nav id="small-screen-nav-bar" class="nav st-menu st-effect-7" role="navigation">
             <ul>
                 <li><a href="#home" data-role="pagelink" class="active-link">
                     <svg data-icon-name="home" width="32" height="32" viewBox="0 0 300 300"></svg><span>Home</span></a></li><!--
@@ -31,16 +31,27 @@
         <div class="st-content"><!-- this is the wrapper for the content -->
             <div class="st-content-inner"><!-- extra div for emulating position:fixed of the menu -->
 
-    <header data-role="header" class="col-container clearfix">
-        <div class="col-header">
-            <svg id="hamburger-menu" data-icon-name="hamburgerCross" width="48" height="48" viewBox="0 0 64 64"></svg>
-        </div>
+        <header data-role="header" class="col-container clearfix">
+            <div class="col-header">
+                <svg id="hamburger-menu" data-icon-name="hamburgerCross" width="48" height="48" viewBox="0 0 64 64"></svg>
+            </div>
 
-        <div class="col-header">
-            <h1>Anaconda</h1>
-        </div>
+            <div class="col-header">
+                <h1>Anaconda</h1>
+            </div>
 
-    </header>
+        </header>
+
+        <nav id="wide-screen-nav-bar" class="nav" role="navigation">
+            <ul>
+                <li><a href="#home" data-role="pagelink" class="active-link">
+                    <svg data-icon-name="home" width="32" height="32" viewBox="0 0 300 300"></svg><span>Home</span></a></li><!--
+                --><li><a href="#location" data-role="pagelink">
+                    <svg data-icon-name="location" width="32" height="32" viewBox="0 0 300 300"></svg><span>Location</span></a></li><!--
+                --><li><a href="#contacts" data-role="pagelink">
+                    <svg data-icon-name="contacts" width="32" height="32" viewBox="0 0 300 300"></svg><span>Contacts</span></a></li>
+            </ul>
+        </nav>
 
 <!--    Main content of the website. It consists of three pages-->
     <div>
