@@ -173,7 +173,7 @@ Nav Bar
 .nav {
     transition: 0.5s margin ease;
     display: block;
-/*    position: relative;*/
+    position: relative;
 }
 
 .main_content {
@@ -224,9 +224,14 @@ body.active .main_content:before {
 
   body.active .nav {
       margin-left: 0;
+      top: -8%;
   }
   body.active .main_content {
       margin-right: -100%;
+  }
+
+  body.active header{
+      margin-left: 300px;
   }
 
   .nav {
@@ -275,6 +280,7 @@ header{
     background: #E2E5BB;
     /*Make sure that header height is fixed whether hamburger menu exists or not.*/
     height: 8%;
+    transition: 0.5s margin ease;
 }
 
 [data-role="header"] h1{
