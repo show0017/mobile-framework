@@ -336,7 +336,7 @@ document.addEventListener("DOMContentLoaded", function(){
     1. Handler for HTML animation to push the page from left to right.
     2. Handler for svg icon animation to change it from 3 staked lines to x
     */
-    window.scrollTo(0, 1);
+
     var hamburgerMenu = document.querySelector("#hamburger-menu");
     hamburgerMenu.addEventListener("click", function(e){
         e.preventDefault();
@@ -344,4 +344,15 @@ document.addEventListener("DOMContentLoaded", function(){
         var container = document.querySelector(".st-container");
         container.classList.toggle("st-menu-open");
     });
+
+    window.addEventListener("resize", function(){
+        var container = document.querySelector(".st-container");
+        if ((720<window.innerWidth) &&
+            (-1 !== container.className.indexOf("st-menu-open"))){
+
+            container.classList.remove("st-menu-open");
+            var hamburgerMenu = document.querySelector("#hamburger-menu");
+            hamburgerMenu.myToggleFunc();
+        }
+    })
 });

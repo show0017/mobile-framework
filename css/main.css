@@ -119,6 +119,10 @@ Nav Bar
     display: none;
 }
 
+#small-screen-nav-bar{
+    display: none;
+}
+
 /* First navigation bar for wide screens where it would be shown only under the header*/
 .nav {
     width:100%;
@@ -260,10 +264,6 @@ Nav Bar
         transform-style: preserve-3d;
     }
 
-    .st-effect-7.st-menu-open .st-pusher {
-        -webkit-transform: translate3d(300px, 0, 0);
-        transform: translate3d(300px, 0, 0);
-    }
 
     .st-effect-7.st-menu {
         -webkit-transform: translate3d(-100%, 0, 0) rotateY(-90deg);
@@ -272,14 +272,6 @@ Nav Bar
         transform-origin: 100% 50%;
         -webkit-transform-style: preserve-3d;
         transform-style: preserve-3d;
-    }
-
-    .st-effect-7.st-menu-open .st-effect-7.st-menu {
-        /*visibility: visible;*/
-        -webkit-transition: -webkit-transform 0.5s;
-        transition: transform 0.5s;
-        -webkit-transform: translate3d(-100%, 0, 0) rotateY(0deg);
-        transform: translate3d(-100%, 0, 0) rotateY(0deg);
     }
 
 @media all and (max-width:720px){
@@ -291,6 +283,9 @@ Nav Bar
       display: none;
   }
 
+  #small-screen-nav-bar{
+      display: block;
+  }
   .nav ul li{
     display: block;
     width: 100%; /* So that anchor tag width inherits the width of list item*/
@@ -299,6 +294,19 @@ Nav Bar
   .nav ul li:nth-child(2) {
     border-left-width: 0px;
     border-right-width: 0px;
+  }
+
+  .st-effect-7.st-menu-open .st-pusher {
+      -webkit-transform: translate3d(300px, 0, 0);
+      transform: translate3d(300px, 0, 0);
+  }
+
+  .st-effect-7.st-menu-open .st-effect-7.st-menu {
+      /*visibility: visible;*/
+      -webkit-transition: -webkit-transform 0.5s;
+      transition: transform 0.5s;
+      -webkit-transform: translate3d(-100%, 0, 0) rotateY(0deg);
+      transform: translate3d(-100%, 0, 0) rotateY(0deg);
   }
 }
 
