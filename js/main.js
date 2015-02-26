@@ -192,6 +192,7 @@ var siteNavigator = (function(){
     var currentPageId = null;
 
     var initNavBarListeners = function(){
+        var key;
         var pagesArray = document.querySelectorAll('[data-role="page"]');
         numPages = pagesArray.length;
         var linksArray = document.querySelectorAll('[data-role="pagelink"]');
@@ -209,7 +210,11 @@ var siteNavigator = (function(){
         for(var i=0;i<numLinks; i++){
             /* Get href attribute and remove hashtag (first character in string value) using
             substr method.*/
-            links[linksArray[i].getAttribute("href").substr(1)] = linksArray[i];
+            key = linksArray[i].getAttribute("href").substr(1);
+            /* Since there are two navigation bars (one for small screen and another one for wide screen)
+            with the same attributes, there must be saved in different keys to avoid any value overwriting.*/
+            key += (i<numLinks/2)?"-smallScreen":"-wideScreen";
+            links[key] = linksArray[i];
             //either add a touch or click listener
             if(touchModule.detectTouchSupport()){
                 linksArray[i].addEventListener("touchend", touchModule.handleTouch, false);
@@ -271,16 +276,38 @@ var siteNavigator = (function(){
             history.replaceState(null, null, "#"+destPageId);
         }else{
 
-            /* Set active-link class to the corresponding link in Nav-Bar*/
-            links[srcPageId].className = "";
-            links[destPageId].className = "active-link";
+            /* Set active-link class to the corresponding link in Nav-Bar. Note that actions must be taken
+            for both navigation bars so that same user experience would be kept for all screens and even
+            if user resizes the browser window. */
+            links[srcPageId+"-smallScreen"].className = " ";
+            links[srcPageId+"-wideScreen"].className = " ";
+
+            links[destPageId+"-smallScreen"].className = "active-link";
+            links[destPageId+"-wideScreen"].className = "active-link";
+
+            /* Activate SVG animation for the navigation bar that is hidden.*/
+            if(720>window.innerWidth){
+                /* case: small screen navigation bar is displayed and user clicks on a link.
+                The link SVG of the wide screen navigation bar must be acitvated as well.
+                Thus the same user experience is kept upon window resizing.*/
+                links[destPageId+"-wideScreen"].myToggleFunc();
+            }else{
+                /* case: wide screen navigation bar is displayed and user clicks on a link.
+                The link SVG of the small screen navigation bar must be activated as well.
+                Thus the same user experience is kept upond window resizing. */
+                links[destPageId+"-smallScreen"].myToggleFunc();
+            }
 
             /* Reverse the animation of the source page's svg icon .
             The destination page animation will take place upon clicking the anchor/svg*/
-            links[srcPageId].myToggleFunc();
+            links[srcPageId+"-smallScreen"].myToggleFunc();
+            links[srcPageId+"-wideScreen"].myToggleFunc();
+
             /* in case back button is pressed, toggle the svg anchor animation of the destination page.*/
-            if(isBackBtnPressed)
-                links[destPageId].myToggleFunc();
+            if(isBackBtnPressed){
+                links[destPageId+"-smallScreen"].myToggleFunc();
+                links[destPageId+"-wideScreen"].myToggleFunc();
+            }
 
             /* Set active-page class to the corresponding page. First hide the current
             page, then show the destination page. Finally start animation while showing
