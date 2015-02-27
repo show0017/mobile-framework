@@ -126,7 +126,7 @@ Nav Bar
 /* First navigation bar for wide screens where it would be shown only under the header*/
 .nav {
     width:100%;
-    border-bottom: 1px solid #000;
+    /*border-bottom: 1px solid #000;*/
 }
 
 .nav ul {
@@ -153,13 +153,32 @@ Nav Bar
 .nav [data-role="pagelink"] {
     display: block;
     padding: 10px 12px;
-    text-decoration: none;
-    color: #FFF;
+    outline: none;
+    box-shadow: inset 0 -1px rgba(0,0,0,0.2);
+    color: #f3efe0;
+    text-transform: uppercase;
+    text-shadow: 0 0 1px rgba(255,255,255,0.1);
+    letter-spacing: 1px;
+    font-weight: 400;
+    -webkit-transition: background 0.3s, box-shadow 0.3s;
+    transition: background 0.3s, box-shadow 0.3s;
+
     position: relative; /* To align text verticall, position the parent relatively then
     position the child absolutely. Set the height of the child node and adjust the
     padding/margin according to used font size.*/
 
 }
+
+.st-menu ul li [data-role="pagelink"]:first-child{
+    box-shadow: inset 0 -1px rgba(0,0,0,0.2), inset 0 1px rgba(0,0,0,0.2);
+}
+
+.nav [data-role="pagelink"]:hover {
+    background: rgba(0,0,0,0.2);
+    box-shadow: inset 0 -1px rgba(0,0,0,0);
+    color: #fff;
+}
+
 .nav [data-role="pagelink"] span{
     position: absolute;
     margin-left: 4px;
@@ -183,7 +202,7 @@ Nav Bar
 
     .st-content {
         overflow-y: scroll;
-        background: #f3efe0;
+/*        background: #f3efe0;*/
     }
 
     .st-content,
@@ -212,42 +231,15 @@ Nav Bar
         top: 0;
         left: 0;
         z-index: 100;
-        /*visibility: hidden;*/
         width: 300px;
         height: 100%;
-        background: #48a770;
         -webkit-transition: all 0.5s;
         transition: all 0.5s;
-    }
-
-    .st-menu ul {
-        margin: 0;
-        padding: 0;
-        list-style: none;
     }
 
     .st-menu ul li a {
         display: block;
         padding: 1em 1em 1em 1.2em;
-        outline: none;
-        box-shadow: inset 0 -1px rgba(0,0,0,0.2);
-        color: #f3efe0;
-        text-transform: uppercase;
-        text-shadow: 0 0 1px rgba(255,255,255,0.1);
-        letter-spacing: 1px;
-        font-weight: 400;
-        -webkit-transition: background 0.3s, box-shadow 0.3s;
-        transition: background 0.3s, box-shadow 0.3s;
-    }
-
-    .st-menu ul li:first-child a {
-        box-shadow: inset 0 -1px rgba(0,0,0,0.2), inset 0 1px rgba(0,0,0,0.2);
-    }
-
-    .st-menu ul li a:hover {
-        background: rgba(0,0,0,0.2);
-        box-shadow: inset 0 -1px rgba(0,0,0,0);
-        color: #fff;
     }
 
     /* Effect 7: 3D rotate in */
@@ -349,11 +341,11 @@ header{
 
 @-webkit-keyframes text-stretch {
 			0% {
-				-webkit-text-stroke: 10px #475500;
+				-webkit-text-stroke: 15px #B1D400;
 				letter-spacing: 0;
 			}
 			100% {
-				-webkit-text-stroke: 20px red;
+				-webkit-text-stroke: 20px #475500;
 				letter-spacing: 10px;
 			}
 }
@@ -365,6 +357,7 @@ header{
 =============================================================*/
 [data-role=page]{
     display: none;
+    background-color: #B0B291;
 }
 
 .active-page{
@@ -407,7 +400,7 @@ footer {
 /* Location page styling
 ==================================================================*/
 #inner-arch{
-    fill: #F7FF2A;
+    fill: #C6ED00;
     /* Since artboard size is 300x300, change point around which rotation will take place to be middle of artboard instead of 0 0 (top-left corner)*/
     transform-origin: 150px 150px;
     -webkit-animation:  rotate 1s linear infinite;

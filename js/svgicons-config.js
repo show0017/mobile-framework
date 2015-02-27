@@ -40,7 +40,7 @@ var svgIconsConfig = {
         {
             el : '#windows',
             animProperties : {
-                from : { val : '{"fill": "#F7FF2A"}' },
+                from : { val : '{"fill": "#C6ED00"}' },
                 to : { val : '{"fill": "#B0B292"}' }
             }
         }
@@ -55,7 +55,7 @@ location:{
                 el : '#pin',
                 animProperties : {
                     from : { val : '{"fill": "#B0B292"}' },
-                    to : { val : '{"fill": "#F7FF2A"}' }             }
+                    to : { val : '{"fill": "#C6ED00"}' }             }
             },
             {
                 el : '#pin',
@@ -68,7 +68,7 @@ location:{
                 el : '#base',
                 animProperties : {
                     from : { val : '{"fill": "#B0B292"}' },
-                    to : { val : '{"fill": "#F7FF2A"}'}
+                    to : { val : '{"fill": "#C6ED00"}'}
                 }
             }
     ]
@@ -80,15 +80,15 @@ location:{
         {
             el : '#eyes-tie-mouth-group',
             animProperties : {
-                from : { val : '{"fill": "#000000"}' },
-                to : { val : '{"fill": "#F7FF2A"}' }
+                from : { val : '{"fill": "#B0B292"}' },
+                to : { val : '{"fill": "#C6ED00"}' }
             }
         },
         {
             el : "#body",
             animProperties :{
                 from : { val : '{"fill": "#B0B292"}' },
-                to : { val : '{"fill": "#F7FF2A"}' }
+                to : { val : '{"fill": "#C6ED00"}' }
             }
         }
     ]
