@@ -16,7 +16,7 @@ clearfix:after {
 }
 
 .clearfix {
-    display: inline-block;
+    display: block;
 }
 
 html[xmlns] .clearfix {
@@ -46,7 +46,7 @@ Menu Navigation button. */
 /*    outline: 1px solid red;*/
 }
 .col-header:last-child{
-    width: 85%;
+    width: 85%; /* 100% - 10% -5%= 85%*/
     margin-left: 0%;
 
 }
@@ -126,7 +126,7 @@ Nav Bar
 /* First navigation bar for wide screens where it would be shown only under the header*/
 .nav {
     width:100%;
-    /*border-bottom: 1px solid #000;*/
+    background-color: #333E00;
 }
 
 .nav ul {
@@ -210,6 +210,12 @@ Nav Bar
         position: relative;
     }
 
+    .st-content-inner{
+        /* Set minimum hieght to push the footer down to the page*/
+        min-height: 88%;
+        background-color: #B0B291;
+    }
+
     .st-container {
         position: relative;
         overflow: hidden;
@@ -242,7 +248,7 @@ Nav Bar
         padding: 1em 1em 1em 1.2em;
     }
 
-    /* Effect 7: 3D rotate in */
+    /* Effect 7: 3D rotate in *//* /TODO: rename effect 7*/
 
     .st-effect-7.st-container {
         -webkit-perspective: 1500px;
@@ -322,7 +328,7 @@ Nav Bar
 header{
     background: #E2E5BB;
     /*Make sure that header height is fixed whether hamburger menu exists or not.*/
-    height: 8%;
+    height: 52px;
     transition: 0.5s margin ease;
 }
 
@@ -357,7 +363,6 @@ header{
 =============================================================*/
 [data-role=page]{
     display: none;
-    background-color: #B0B291;
 }
 
 .active-page{
@@ -389,11 +394,13 @@ header{
 footer {
     background: #E2E5BB;
     /* Adjust position of footer with respect to main content div.*/
+/*
     position: absolute;
     left: 0;
     bottom: -60px;
+*/
     height: 60px;
-    width: 100%; /* width = 100% - 2*2% = 96%*/
+    width: 100%;
 }
 
 
