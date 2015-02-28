@@ -64,7 +64,11 @@ var svgIcons = (function(){
                 var targetElem = ("hamburgerCross" === iconNameDataSet)?
                     svgElement: svgElement.parentNode;
 
-                /* TODO: Add touch support */
+                /* Add touch support */
+                //either add a touch or click listener
+                if(touchModule.detectTouchSupport()){
+                    targetElem.addEventListener("touchend", touchModule.handleTouch, false);
+                }
                 /* JS Closure must be used to lock the canvas and the configurations of
                 each svg separately. Note that initial value of toggle flag is false.*/
                 targetElem.addEventListener("click",
@@ -107,7 +111,7 @@ var position = (function (){
     var locationInfoContainerDiv; // location info div whose id is "loc-info-container" in HTML
 
     var getCurrentLocation = function(){
-
+        /*TODO: Use Cordova Geoloation API*/
       if( navigator.geolocation ){
           var params = {enableHighAccuracy: false, timeout:3600, maximumAge:60000};
           navigator.geolocation.getCurrentPosition( reportPosition, gpsError, params );
