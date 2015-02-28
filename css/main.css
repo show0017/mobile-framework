@@ -212,7 +212,7 @@ Nav Bar
 
     .st-content-inner{
         /* Set minimum hieght to push the footer down to the page*/
-        min-height: 95%;
+        min-height: 91.5%;
         background-color: #B0B291;
     }
 
@@ -395,11 +395,9 @@ header{
 footer {
     background: #E2E5BB;
     /* Adjust position of footer with respect to main content div.*/
-/*
     position: absolute;
     left: 0;
-    bottom: -60px;
-*/
+    bottom: -52px;
     height: 52px; /* Same height as header*/
     width: 100%;
 }

@@ -7,6 +7,14 @@
  ☐ add check that lenght of links is equal to lenght of pages and given ids are equal to given links href.
  ☐ Add Custom icon for application on Android device.
  ☐ Add attribute to all used icons/images with my application.
+ ✔ fix overflow scrollbar on pagelod @done (15-02-28 15:27)
+ ☐ active tab change color
+ ☐ align everything to left
+ ☐ find a better visual solution to canvas
+ ☐ back button in browser, there is an active tab bug
+ ☐  vertical menu: once you select a tab toggle menu also, hide menu
+ ☐  use HSB to play with monochromatic theme and add colors
+ ☐ Center title
 
  Optional Task list:
 ☐ Use hammar.js to handle all touch delays.
