@@ -212,7 +212,7 @@ Nav Bar
 
     .st-content-inner{
         /* Set minimum hieght to push the footer down to the page*/
-        min-height: 88%;
+        min-height: 95%;
         background-color: #B0B291;
     }
 
@@ -257,7 +257,8 @@ Nav Bar
         perspective-origin: 0% 50%;
     }
 
-    .st-effect-7 .st-pusher {
+    .st-effect-7 .st-pusher,
+    footer {
         -webkit-transform-style: preserve-3d;
         transform-style: preserve-3d;
     }
@@ -399,7 +400,7 @@ footer {
     left: 0;
     bottom: -60px;
 */
-    height: 60px;
+    height: 52px; /* Same height as header*/
     width: 100%;
 }
 
