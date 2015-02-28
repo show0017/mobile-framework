@@ -1,0 +1,18 @@
+ Mandatory Task list:
+ ☐ Use Cordova Geoloadtion API to get current user location
+ ☐ Use Cordova Contacts API to get one of a contact from users phone.
+ ☐ Rename effect 7 on css that do the 3D animation.
+ ☐ Remove st-content-inner.
+ ☐ optimize any code that is repeated in this module or even sepatate corresponding code snippets to anothe meaningful module.
+ ☐ add check that lenght of links is equal to lenght of pages and given ids are equal to given links href.
+ ☐ Add Custom icon for application on Android device.
+ ☐ Add attribute to all used icons/images with my application.
+
+ Optional Task list:
+☐ Use hammar.js to handle all touch delays.
+☐ Check web-fonts or whatever.
+☐ Check with Steve if there is js object or property that holds the source page id after firing popstate event.
+☐ Add splash screen to the app.
+☐ 
+
+<div>Icon made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed under <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>
