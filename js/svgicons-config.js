@@ -30,7 +30,7 @@ var svgIconsConfig = {
     externalAnimationTrigger: true,
     animation : [
         {
-            el : '#ceil',
+            el : '#ceil', /* Move the ceil to the top*/
             animProperties : {
                 from : { val : '{"path": "M216.6-0.2L58.2-2L1,87v9.4l134.1,29.1L205.4,9.3l75.9,90.9H301L216.6-0.2z"}' },
                 to : { val : '{"path":"M216.6,15.4L58.2,13.6L1,102.6v9.4l134.1,29.1l70.3-116.2l75.9,90.9H301L216.6,15.4z"}' }
@@ -38,10 +38,26 @@ var svgIconsConfig = {
         }
         ,
         {
+            el : '#ceil',
+            animProperties : {
+                from : { val : '{"fill": "#C7EB00"}' }, /* #C7EB00 is equivalent to hsl(69,100%, 46%) */
+                to : { val : '{"fill": "#f3efe0"}' }
+            }
+        }
+        ,
+        {
             el : '#windows',
             animProperties : {
-                from : { val : '{"fill": "#C6ED00"}' },
-                to : { val : '{"fill": "#B0B292"}' }
+                from : { val : '{"fill": "#343D00"}' }, /* #C7EB00 is equivalent to hsl(69,100%, 46%) */
+                to : { val : '{"fill": "#f3efe0"}' }
+            }
+        }
+        ,
+        {
+            el : '#body',
+            animProperties : {
+                from : { val : '{"fill": "#C7EB00"}' }, /* #C7EB00 is equivalent to hsl(69,100%, 46%) */
+                to : { val : '{"fill": "#f3efe0"}' }
             }
         }
     ]
@@ -54,8 +70,9 @@ location:{
             {
                 el : '#pin',
                 animProperties : {
-                    from : { val : '{"fill": "#B0B292"}' },
-                    to : { val : '{"fill": "#C6ED00"}' }             }
+                    from : { val : '{"fill": "#f3efe0"}' },
+                    to : { val : '{"fill": "#C7EB00"}' }  /* #C7EB00 is equivalent to hsl(69,100%, 46%) */
+                }
             },
             {
                 el : '#pin',
@@ -67,8 +84,8 @@ location:{
             {
                 el : '#base',
                 animProperties : {
-                    from : { val : '{"fill": "#B0B292"}' },
-                    to : { val : '{"fill": "#C6ED00"}'}
+                    from : { val : '{"fill": "#f3efe0"}' },
+                    to : { val : '{"fill": "#C7EB00"}'} /* #C7EB00 is equivalent to hsl(69,100%, 46%) */
                 }
             }
     ]
@@ -80,17 +97,25 @@ location:{
         {
             el : '#eyes-tie-mouth-group',
             animProperties : {
-                from : { val : '{"fill": "#B0B292"}' },
-                to : { val : '{"fill": "#C6ED00"}' }
+                from : { val : '{"fill": "#f3efe0"}' },
+                to : { val : '{"fill": "#C7EB00"}' } /* #C7EB00 is equivalent to hsl(69,100%, 46%) */
             }
         },
         {
             el : "#body",
             animProperties :{
-                from : { val : '{"fill": "#B0B292"}' },
-                to : { val : '{"fill": "#C6ED00"}' }
+                from : { val : '{"fill": "#f3efe0"}' },
+                to : { val : '{"fill": "#C7EB00"}' } /* #C7EB00 is equivalent to hsl(69,100%, 46%) */
+            }
+        },
+        {
+            el : "#face",
+            animProperties :{
+                from : { val : '{"fill": "#f3efe0"}' },
+                to : { val : '{"fill": "#343D00"}' } /* #343D00 is equivalent to hsl(69,100%, 12%) */
             }
         }
+
     ]
 
  },

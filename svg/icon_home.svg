@@ -5,9 +5,9 @@
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 300 300" enable-background="new 0 0 300 300" xml:space="preserve">
 <g>
-	<path id="ceil" fill="#B0B292" d="M216.6-0.2L58.2-2L1,87v9.4l134.1,29.1L205.4,9.3l75.9,90.9H301L216.6-0.2z"/>
-	<path id="body" fill="#B0B292" d="M140.7,158.5L8.5,129.4v114.4l76.9,32.8v-73.1l38.4,11.3v77.8l18.8,8.4l0,0l131.2-56.2V134.1v-1.9v-5.6 L206.3,46L140.7,158.5z"/>
-	<g id="windows" fill="#C6ED00" >
+	<path id="ceil" fill="#C7EB00" d="M216.6-0.2L58.2-2L1,87v9.4l134.1,29.1L205.4,9.3l75.9,90.9H301L216.6-0.2z"/>
+	<path id="body" fill="#C7EB00" d="M140.7,158.5L8.5,129.4v114.4l76.9,32.8v-73.1l38.4,11.3v77.8l18.8,8.4l0,0l131.2-56.2V134.1v-1.9v-5.6 L206.3,46L140.7,158.5z"/>
+	<g id="windows" fill="#343D00" >
 		<polygon id="window-07" points="61,223.6 28.2,212.3 28.2,185.1 61,195.4 		"/>
 		<polygon id="window-06" points="62.9,179.5 30.1,170.1 30.1,142 62.9,150.4 		"/>
 		<polygon id="window-05" points="123.8,196.4 85.4,186.1 85.4,156.1 123.8,165.4 		"/>

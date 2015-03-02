@@ -1,3 +1,39 @@
+var anacondaApp = (function(){
+    var init = function(){
+        document.addEventListener("deviceready", onDeviceReady, false);
+        document.addEventListener("DOMContentLoaded", onPageLoaded, false);
+        window.addEventListener("resize", onWindowResize, true);
+    }
+
+    var onDeviceReady = function(){
+        console.log("***************** Device is ready to use its functionalities  ******************");
+        contacts.load();
+    }
+
+    var onPageLoaded = function(){
+        console.log("Page is loaded");
+        svgIcons.load();
+        siteNavigator.initNavBarListeners();
+    }
+
+    var onWindowResize = function(){
+        var container = document.querySelector(".st-container");
+        /* Check if the user is resizing the window and hamburger menu is opened. Then toggle the menu
+        and remove st-menu-open class so that if the user resize the window for small screen again,
+        the small-screen navigation bar is always hidden. */
+        if ((720<window.innerWidth) &&
+            (-1 !== container.className.indexOf("st-menu-open"))){
+            var hamburgerMenu = document.querySelector("#hamburger-menu");
+            /* Note that the remoaval of st-menu-open class is done inside toggling function of hamburger menu.*/
+            hamburgerMenu.myToggleFunc();
+        }
+    }
+
+    return {
+        init: init
+    }
+})();
+
 var touchModule = (function(){
 
     //Test for browser support of touch events
@@ -11,15 +47,14 @@ var touchModule = (function(){
 
     //handle the touchend event
     var handleTouch = function (ev){
+      if( ev.type == "touchend"){
         ev.preventDefault();
-        ev.stopImmediatePropagation();
-        var touch = evt.changedTouches[0];        //this is the first object touched
-        var newEvt = document.createEvent("MouseEvent");
-        //old method works across browsers, though it is deprecated.
-        newEvt.initMouseEvent("click", true, true, window, 1, touch.screenX, touch.screenY,
-                              touch.clientX, touch.clientY);
-        ev.originalTarget.dispatchEvent(newEvt);
-        //send the touch to the click handler
+        var touch = ev.changedTouches[0];        //this is the first object touched
+        var newEvt = document.createEvent("MouseEvent");	//old method works across browsers, though it is deprecated.
+        newEvt.initMouseEvent("click", true, true, window, 1, touch.screenX, touch.screenY, touch.clientX, touch.clientY);
+        ev.currentTarget.dispatchEvent(newEvt);
+
+      }
     }
 
     return{
@@ -28,10 +63,86 @@ var touchModule = (function(){
     }
 })();
 
+var contacts = (function(){
+    var numOfEntries=-1;
+    var entries;
+    var load = function(){
+
+        var options      = new ContactFindOptions();
+        options.filter   = ""; // A string can be used as a search filter when querying the contacts database
+        options.multiple = true; // return multiple results.
+
+        var fields       = [navigator.contacts.fieldType.displayName,
+                            navigator.contacts.fieldType.phoneNumbers,
+                            navigator.contacts.fieldType.addresses,
+                            navigator.contacts.fieldType.photos];
+
+        /* Asynchronously method to query the device contacts database.It returns an array of Contact objects.*/
+        navigator.contacts.find(fields, onSuccess, onError, options);
+    }
+
+    var onSuccess = function(contacts){
+        console.log("Found "+ contacts.length+ " on the phone");
+        entries = contacts;
+        numOfEntries = contacts.length;
+    }
+
+    var onError = function(contacts){
+        console.error("Error:"+ contacts.code);
+        numOfEntries = -1;
+        entries = [];
+    }
+
+    var getEntries = function(){
+        return entries;
+    }
+
+    var getAddresses = function(index){
+        var addressess=[];
+        if(entries[index]){
+            var array = entries[index].addresses;
+            for (var i=0; array && i< array.length; i++){
+                addressess.push(array[i].formatted);
+            }
+        }
+        return addressess;
+    }
+
+    var getEmails = function(index){
+        var emails=[];
+        if(entries[index]){
+            var array = entries[index].emails;
+            for (var i=0; array && i< array.length; i++){
+                emails.push(array[i].value);
+            }
+        }
+        return emails;
+    }
+
+    var getPhoneNumbers = function(index){
+        var phones=[];
+        if(entries[index]){
+            var array = entries[index].phoneNumbers;
+            for (var i=0; array && i< array.length; i++){
+                phones.push(array[i].value);
+            }
+        }
+        return phones;
+    }
+
+    return{
+        load: load,
+        getEntries: getEntries,
+        getAddresses: getAddresses,
+        getEmails: getEmails,
+        getPhoneNumbers: getPhoneNumbers
+    }
+})();
+
 var svgIcons = (function(){
 
     var load = function(){
-        /* Load all svg images and set their click/touch listeners. */
+        /* Load all svg images and set their tap event listeners. */
         var svgElementsArray = document.querySelectorAll("svg[data-icon-name]");
         for(var i=0; i<svgElementsArray.length; i++){
             var svgElement = svgElementsArray[i];
@@ -58,7 +169,7 @@ var svgIcons = (function(){
             })(snapCanvas));
 
             if(true === svgConfig.externalAnimationTrigger){
-                /* Click/Touch listener will be set to the anchor tag that represents
+                /* Tap event listener will be set to the anchor tag that represents
                 the parent node of SVG tag in HTML document. Exception for hamburger menu,
                 the listener will be set to SVG tag itself.*/
                 var targetElem = ("hamburgerCross" === iconNameDataSet)?
@@ -69,16 +180,28 @@ var svgIcons = (function(){
                 if(touchModule.detectTouchSupport()){
                     targetElem.addEventListener("touchend", touchModule.handleTouch, false);
                 }
+
                 /* JS Closure must be used to lock the canvas and the configurations of
                 each svg separately. Note that initial value of toggle flag is false.*/
                 targetElem.addEventListener("click",
                         targetElem.myToggleFunc = toggle(svgConfig, snapCanvas, false));
+
             }
         }
     }
 
     var toggle = function(config, canvas, toggled){
         return function(){
+            if(-1 !== config.url.indexOf("hamburger")){
+                /* Execute HTML animatin of hamburger menu.
+                Note that hamburger menu has to handle the following animations:
+                1. HTML animation to push the page from left to right.
+                2. SVG icon animation to change it from 3 staked lines to x
+                */
+                var container = document.querySelector(".st-container");
+                container.classList.toggle("st-menu-open");
+            }
+
             /* Loop on animation configurations of the given SVG. Select the
             given id, parse the attribute of that id. Finally apply the attribute
             to the id using snap svg library.*/
@@ -111,7 +234,6 @@ var position = (function (){
     var locationInfoContainerDiv; // location info div whose id is "loc-info-container" in HTML
 
     var getCurrentLocation = function(){
-        /*TODO: Use Cordova Geoloation API*/
       if( navigator.geolocation ){
           var params = {enableHighAccuracy: false, timeout:3600, maximumAge:60000};
           navigator.geolocation.getCurrentPosition( reportPosition, gpsError, params );
@@ -124,6 +246,12 @@ var position = (function (){
 
     var reportPosition = function ( position ){
         var canvas = document.querySelector("#canvas-map");
+
+        var canvasPaddingInPx = getComputedStyle(canvas,null).getPropertyValue("padding-left");
+        /* remove px from the padding string*/
+        canvasPaddingInPx = canvasPaddingInPx.substring(0, canvasPaddingInPx.length-2);
+        console.log(canvasPaddingInPx);
+        var canvasComputedWidth = canvas.width - 2* canvasPaddingInPx;
         var context = canvas.getContext("2d");
 
         // Create new img element
@@ -145,7 +273,7 @@ var position = (function (){
             position.coords.latitude+','+
             position.coords.longitude+'&'+
             'zoom=14'+ '&'+
-            'size=400x400'+'&'+
+            'size='+canvasComputedWidth+'x400'+'&'+
             'markers=color:red'+'|'+
             position.coords.latitude+','+
             position.coords.longitude+'&'+
@@ -187,8 +315,6 @@ var position = (function (){
 })();
 
 var siteNavigator = (function(){
-    /* TODO: optimize any code that is repeated in this module or even sepatate corresponding
-    code snippets to anothe meaningful module. */
     var pages = {};
     var links={};
     var numLinks = 0;
@@ -201,9 +327,6 @@ var siteNavigator = (function(){
         numPages = pagesArray.length;
         var linksArray = document.querySelectorAll('[data-role="pagelink"]');
         numLinks = linksArray.length;
-
-        /* TODO: add check that lenght of links is equal to lenght of pages and
-        given ids are equal to given links href.*/
 
         /* save pages into js object where the key is the same as the given page id*/
         for(var i=0; i< numPages; i++){
@@ -219,7 +342,8 @@ var siteNavigator = (function(){
             with the same attributes, there must be saved in different keys to avoid any value overwriting.*/
             key += (i<numLinks/2)?"-smallScreen":"-wideScreen";
             links[key] = linksArray[i];
-            //either add a touch or click listener
+
+            //Add touch and click listeners.
             if(touchModule.detectTouchSupport()){
                 linksArray[i].addEventListener("touchend", touchModule.handleTouch, false);
             }
@@ -235,6 +359,7 @@ var siteNavigator = (function(){
     //handle the click event
     var handleNav = function (ev){
         ev.preventDefault();
+
         /* Since the handlers of click/touch listeners are registered using bubbling
         propatation. Also the handlers are registered for acnhor tags not for SVG tags.
         Accordingly, currentTarget must be used instead of target to get href attribute
@@ -257,6 +382,41 @@ var siteNavigator = (function(){
                 setTimeout(position.getCurrentLocation, 2000);
                 break;
             case "contacts":
+                /* Generate a random number from the available contacts to be displayed.
+                Note that a random number will be generated in the range (0, maximum length of contacts -1)*/
+
+                if(contacts.getEntries()){
+                    var randomIndex = Math.floor(Math.random() * contacts.getEntries().length);
+                    console.log("randomIndex is:" + randomIndex);
+                    var contactInfo = contacts.getEntries()[randomIndex];
+                    var tablePlaceHolders = document.querySelectorAll("table tr td");
+
+                    tablePlaceHolders[0].innerHTML = contactInfo.displayName;
+
+                    tablePlaceHolders[1].innerHTML ="";
+                    var contactAddresses = contacts.getAddresses(randomIndex);
+                    for(var j=0; j<contactAddresses.length; j++ ){
+                        tablePlaceHolders[1].innerHTML += contactAddresses[j] + "<br>";
+                    }
+
+                    tablePlaceHolders[2].innerHTML = "";
+                    var contactPhoneNumbers = contacts.getPhoneNumbers(randomIndex);
+                    for(var j=0; j<contactPhoneNumbers.length; j++ ){
+                        tablePlaceHolders[2].innerHTML += contactPhoneNumbers[j] + "<br>";
+                    }
+
+                    tablePlaceHolders[3].innerHTML = "";
+                    var contactEmails = contacts.getEmails(randomIndex);
+                    for(var j=0; j< contactEmails.length; j++){
+                        tablePlaceHolders[3].innerHTML += contactEmails[j] + "<br>";
+                    }
+
+                    var img = tablePlaceHolders[4].querySelector("img");
+                    img.src="";
+                    if(contactInfo.photos){
+                        img.src = contactInfo.photos[0].value;
+                    }
+                }
                 break;
             default:
         }
@@ -295,23 +455,37 @@ var siteNavigator = (function(){
                 The link SVG of the wide screen navigation bar must be acitvated as well.
                 Thus the same user experience is kept upon window resizing.*/
                 links[destPageId+"-wideScreen"].myToggleFunc();
+
+                /* in case back button is pressed, toggle the svg anchor animation of the destination page.*/
+                if(isBackBtnPressed){
+                    links[destPageId+"-smallScreen"].myToggleFunc();
+                }
+
+                /* For small screen sizes, if hamburger menu is opened, make sure to close it after user's selection.*/
+                var container = document.querySelector(".st-container");
+                if (-1 !== container.className.indexOf("st-menu-open")){
+                    var hamburgerMenu = document.querySelector("#hamburger-menu");
+                    /* Note that the remoaval of st-menu-open class is done inside toggling function of hamburger menu.*/
+                    hamburgerMenu.myToggleFunc();
+                }
+
             }else{
                 /* case: wide screen navigation bar is displayed and user clicks on a link.
                 The link SVG of the small screen navigation bar must be activated as well.
                 Thus the same user experience is kept upond window resizing. */
                 links[destPageId+"-smallScreen"].myToggleFunc();
+
+                /* in case back button is pressed, toggle the svg anchor animation of the destination page.*/
+                if(isBackBtnPressed){
+                    links[destPageId+"-wideScreen"].myToggleFunc();
+                }
+
             }
 
             /* Reverse the animation of the source page's svg icon .
             The destination page animation will take place upon clicking the anchor/svg*/
             links[srcPageId+"-smallScreen"].myToggleFunc();
             links[srcPageId+"-wideScreen"].myToggleFunc();
-
-            /* in case back button is pressed, toggle the svg anchor animation of the destination page.*/
-            if(isBackBtnPressed){
-                links[destPageId+"-smallScreen"].myToggleFunc();
-                links[destPageId+"-wideScreen"].myToggleFunc();
-            }
 
             /* Set active-page class to the corresponding page. First hide the current
             page, then show the destination page. Finally start animation while showing
@@ -345,9 +519,6 @@ var siteNavigator = (function(){
         ev.preventDefault();
         var destPageId = location.hash.split("#")[1];  //hash will include the "#"
 
-        /*TODO: Check with Steve if there is js object or property that holds the source page id after
-        firing popstate event. */
-
         //update the visible div and the active tab
         doPageTransition(currentPageId, destPageId, false, true);
     }
@@ -357,33 +528,4 @@ var siteNavigator = (function(){
     }
 })();
 
-document.addEventListener("DOMContentLoaded", function(){
-
-    svgIcons.load();
-
-    siteNavigator.initNavBarListeners();
-    /* Execute HTML animatin of hamburger menu.
-    Note that hamburger menu has two listeners for the click event:
-    1. Handler for HTML animation to push the page from left to right.
-    2. Handler for svg icon animation to change it from 3 staked lines to x
-    */
-
-    var hamburgerMenu = document.querySelector("#hamburger-menu");
-    hamburgerMenu.addEventListener("click", function(e){
-        e.preventDefault();
-//        document.body.classList.toggle("active");
-        var container = document.querySelector(".st-container");
-        container.classList.toggle("st-menu-open");
-    });
-
-    window.addEventListener("resize", function(){
-        var container = document.querySelector(".st-container");
-        if ((720<window.innerWidth) &&
-            (-1 !== container.className.indexOf("st-menu-open"))){
-
-            container.classList.remove("st-menu-open");
-            var hamburgerMenu = document.querySelector("#hamburger-menu");
-            hamburgerMenu.myToggleFunc();
-        }
-    })
-});
+anacondaApp.init();

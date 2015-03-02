@@ -5,19 +5,21 @@
     <meta name="viewport" content="width=device-width">
     <title>Web for mobile framework assignment</title>
     <link rel="stylesheet" href="css/main.css">
-    <script src="js/snap.svg.js"></script>
-    <script src="js/svgicons-config.js"></script>
-    <script src="js/main.js"></script>
+
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/snap.svg.js"></script>
+    <script type="text/javascript" src="js/svgicons-config.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
 </head>
 
 <body class="flexible-font">
 
 <!-- Containter DIV for the whole page.-->
-<div class="wrapper st-container st-effect-7">
+<div class="st-container rotate-in-3d">
 
     <div class="st-pusher">
         <!--    Navigation bar-->
-        <nav id="small-screen-nav-bar" class="nav st-menu st-effect-7" role="navigation">
+        <nav id="small-screen-nav-bar" class="nav st-menu rotate-in-3d" role="navigation">
             <ul>
                 <li><a href="#home" data-role="pagelink" class="active-link">
                     <svg data-icon-name="home" width="32" height="32" viewBox="0 0 300 300"></svg><span>Home</span></a></li><!--
@@ -55,7 +57,7 @@
 
 <!--    Main content of the website. It consists of three pages-->
         <section data-role="page" id="home" class="active-page">
-            <h2>Home</h2>
+            <h3>Home</h3>
             <p>This app is just an amazing one. You can use it to grab all contacts from your
                 phone. Besides, it can display your current location and finally it is
                 developed to be responsively designed.
@@ -67,7 +69,7 @@
             </p>
         </section> <!--  End of homepage section-->
         <section data-role="page" id="location">
-          <h2>Location</h2>
+          <h3>User Current Location</h3>
           <div id="output">
               <svg id="loading" data-icon-name="loading" width="20%" height="20%" viewBox="0 0 300 300" ></svg>
               <div id="loc-info-container" class="hide">
@@ -77,17 +79,33 @@
           </div>
         </section> <!--  End of location section-->
         <section data-role="page" id="contacts">
-          <h2>Contacts Page</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sagittis sodales rutrum. Phasellus non dui euismod, pulvinar est et, tincidunt enim. Donec dictum odio nec ipsum placerat dapibus. Proin vehicula lorem sapien, vehicula interdum nisl viverra at. Vivamus eget mauris vitae tellus auctor semper vel a lectus. Vivamus facilisis eros quam, at elementum massa facilisis non. Phasellus placerat gravida risus, in pulvinar nisl lobortis vitae.</p>
-          <br>
-          <br>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sagittis sodales rutrum. Phasellus non dui euismod, pulvinar est et, tincidunt enim. Donec dictum odio nec ipsum placerat dapibus. Proin vehicula lorem sapien, vehicula interdum nisl viverra at. Vivamus eget mauris vitae tellus auctor semper vel a lectus. Vivamus facilisis eros quam, at elementum massa facilisis non. Phasellus placerat gravida risus, in pulvinar nisl lobortis vitae.</p>
-          <br>
-          <br>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sagittis sodales rutrum. Phasellus non dui euismod, pulvinar est et, tincidunt enim. Donec dictum odio nec ipsum placerat dapibus. Proin vehicula lorem sapien, vehicula interdum nisl viverra at. Vivamus eget mauris vitae tellus auctor semper vel a lectus. Vivamus facilisis eros quam, at elementum massa facilisis non. Phasellus placerat gravida risus, in pulvinar nisl lobortis vitae.</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sagittis sodales rutrum. Phasellus non dui euismod, pulvinar est et, tincidunt enim. Donec dictum odio nec ipsum placerat dapibus. Proin vehicula lorem sapien, vehicula interdum nisl viverra at. Vivamus eget mauris vitae tellus auctor semper vel a lectus. Vivamus facilisis eros quam, at elementum massa facilisis non. Phasellus placerat gravida risus, in pulvinar nisl lobortis vitae.</p>
+          <table>
+            <caption>Contact Information</caption>
+            <tr>
+                <th>Name:</th>
+                <td>Bill Gates</td>
+            </tr>
+            <tr>
+                <th>Address:</th>
+                <td>43A Waterbridge Drive, Ottawa, Canada</td>
+            </tr>
+            <tr>
+                <th>Phone Number:</th>
+                <td>647-773-6945</td>
+            </tr>
+            <tr>
+                <th>Email:</th>
+                <td>showairovic@gmail.com</td>
+            </tr>
+            <tr>
+                <th>Photo:</th>
+                <td><img id="contact-photo" alt="photo of current contact"></td>
+            </tr>
+            </table>
         </section> <!--  End of contacts section-->
-            <footer>Fixed Footer</footer>
+            <footer>
+                <p>© Algonquin College</p>
+            </footer>
             </div><!-- /st-content-inner -->
         </div><!-- /st-content -->
     </div> <!-- st-pusher div -->
