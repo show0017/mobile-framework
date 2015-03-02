@@ -351,6 +351,13 @@ var siteNavigator = (function(){
         }
         delete linksArray; // Free the memory to increase perfromance.
 
+        //add event listener for select random contact button
+        var selectBtn = document.querySelector("#select-contact");
+        if(touchModule.detectTouchSupport()){
+            selectBtn.addEventListener("touchend", touchModule.handleTouch, false);
+        }
+        selectBtn.addEventListener("click", selectRandomContact, false);
+
         //add the listener for the back button
         window.addEventListener("popstate", browserBackButton, false);
         doPageTransition(null, "home");
@@ -382,41 +389,6 @@ var siteNavigator = (function(){
                 setTimeout(position.getCurrentLocation, 2000);
                 break;
             case "contacts":
-                /* Generate a random number from the available contacts to be displayed.
-                Note that a random number will be generated in the range (0, maximum length of contacts -1)*/
-
-                if(contacts.getEntries()){
-                    var randomIndex = Math.floor(Math.random() * contacts.getEntries().length);
-                    console.log("randomIndex is:" + randomIndex);
-                    var contactInfo = contacts.getEntries()[randomIndex];
-                    var tablePlaceHolders = document.querySelectorAll("table tr td");
-
-                    tablePlaceHolders[0].innerHTML = contactInfo.displayName;
-
-                    tablePlaceHolders[1].innerHTML ="";
-                    var contactAddresses = contacts.getAddresses(randomIndex);
-                    for(var j=0; j<contactAddresses.length; j++ ){
-                        tablePlaceHolders[1].innerHTML += contactAddresses[j] + "<br>";
-                    }
-
-                    tablePlaceHolders[2].innerHTML = "";
-                    var contactPhoneNumbers = contacts.getPhoneNumbers(randomIndex);
-                    for(var j=0; j<contactPhoneNumbers.length; j++ ){
-                        tablePlaceHolders[2].innerHTML += contactPhoneNumbers[j] + "<br>";
-                    }
-
-                    tablePlaceHolders[3].innerHTML = "";
-                    var contactEmails = contacts.getEmails(randomIndex);
-                    for(var j=0; j< contactEmails.length; j++){
-                        tablePlaceHolders[3].innerHTML += contactEmails[j] + "<br>";
-                    }
-
-                    var img = tablePlaceHolders[4].querySelector("img");
-                    img.src="";
-                    if(contactInfo.photos){
-                        img.src = contactInfo.photos[0].value;
-                    }
-                }
                 break;
             default:
         }
@@ -521,6 +493,44 @@ var siteNavigator = (function(){
 
         //update the visible div and the active tab
         doPageTransition(currentPageId, destPageId, false, true);
+    }
+
+    var selectRandomContact = function(){
+        /* Generate a random number from the available contacts to be displayed.
+        Note that a random number will be generated in the range (0, maximum length of contacts -1)*/
+        console.log("Button is pressed");
+        if(contacts.getEntries()){
+            var randomIndex = Math.floor(Math.random() * contacts.getEntries().length);
+            console.log("randomIndex is:" + randomIndex);
+            var contactInfo = contacts.getEntries()[randomIndex];
+            var tablePlaceHolders = document.querySelectorAll("table tr td");
+
+            tablePlaceHolders[0].innerHTML = contactInfo.displayName;
+
+            tablePlaceHolders[1].innerHTML ="";
+            var contactAddresses = contacts.getAddresses(randomIndex);
+            for(var j=0; j<contactAddresses.length; j++ ){
+                tablePlaceHolders[1].innerHTML += contactAddresses[j] + "<br>";
+            }
+
+            tablePlaceHolders[2].innerHTML = "";
+            var contactPhoneNumbers = contacts.getPhoneNumbers(randomIndex);
+            for(var j=0; j<contactPhoneNumbers.length; j++ ){
+                tablePlaceHolders[2].innerHTML += contactPhoneNumbers[j] + "<br>";
+            }
+
+            tablePlaceHolders[3].innerHTML = "";
+            var contactEmails = contacts.getEmails(randomIndex);
+            for(var j=0; j< contactEmails.length; j++){
+                tablePlaceHolders[3].innerHTML += contactEmails[j] + "<br>";
+            }
+
+            var img = tablePlaceHolders[4].querySelector("img");
+            img.src="";
+            if(contactInfo.photos){
+                img.src = contactInfo.photos[0].value;
+            }
+        }
     }
 
     return {

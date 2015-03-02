@@ -195,7 +195,7 @@ border-right-width: 0px;
 }
 .nav [data-role="pagelink"].active-link{
     color: hsl(69,100%,42%);
-    background-color: hsla(69,100%,32%, 0.5);;
+    background-color: hsla(69,100%,32%, 0.5);
 }
 
     html,
@@ -424,13 +424,6 @@ table{
     padding-left: 2rem;
     margin: 1% 0;
 }
-table caption{
-    text-align: left;
-    padding-left: 2rem;
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin: 1% 0;
-}
 
 table tr{
     text-align: left;
@@ -448,6 +441,71 @@ table tr td img{
     width: 150px;
     height: 150px;
 }
+
+/* Common button styles */
+.button {
+	float: left;
+	min-width: 150px;
+	max-width: 250px;
+	display: block;
+	margin: 2em;
+	padding: 1em 2em;
+
+	background: hsl(69,100%,12%);
+	color: #f3efe0;
+	vertical-align: middle;
+	position: relative;
+	z-index: 1;
+	-webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+	border: 1px solid hsl(69,54%,21%);;
+	font-size: 1rem;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	border-radius: 5px;
+}
+
+.button:active {
+	outline: none;
+    background-color: hsla(69,100%,32%, 0.5);
+}
+
+/* Wayra */
+.button--wayra {
+	overflow: hidden;
+	width: 245px;
+}
+.button--wayra::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 150%;
+	height: 100%;
+	background: hsla(69,100%,32%, 0.5);
+	z-index: -1;
+	-webkit-transform: rotate3d(0, 0, 1, -45deg) translate3d(0, -3em, 0);
+	transform: rotate3d(0, 0, 1, -45deg) translate3d(0, -3em, 0);
+	-webkit-transform-origin: 0% 100%;
+	transform-origin: 0% 100%;
+	-webkit-transition: -webkit-transform 0.3s, opacity 0.3s, background-color 0.3s;
+	transition: transform 0.3s, opacity 0.3s, background-color 0.3s;
+}
+
+.button--wayra:hover {
+	color: #fff;
+	border-color: hsl(69,100%,32%);
+}
+
+.button--wayra:hover::before {
+	opacity: 1;
+	background-color: hsla(69,100%,32%, 0.5);
+	-webkit-transform: rotate3d(0, 0, 1, 0deg);
+	transform: rotate3d(0, 0, 1, 0deg);
+	-webkit-transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+	transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+}
+
 
 /* Animations
 ==================================================================*/
